@@ -1,22 +1,15 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import LoginPopup from "../Popups/LoginPopup/LoginPopup";
 import RegistrationPopup from "../Popups/RegistrationPopup/RegistrationPopup";
 import { useSelector } from "react-redux";
-import { selectUser, setUser } from "../../redux/authSlice";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
-import { useDispatch } from "react-redux";
-import { clearFavorites, clearState } from "../../redux/nanniesSlice";
+import { selectUser } from "../../redux/authSlice";
 import { ReactComponent as IconAvatar } from "../../img/avatar.svg";
 import css from "./Header.module.css";
 
 const Header = () => {
   const currentUser = useSelector(selectUser);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [isOpenLoginPopup, setOpenLoginPopup] = useState(false);
   const [isOpenRegistrationPopup, setOpenRegistrationPopup] = useState(false);
@@ -34,18 +27,7 @@ const Header = () => {
     setOpenRegistrationPopup(false);
   };
 
-  const handleLogOut = () => {
-    signOut(auth)
-      .then(() => {
-        dispatch(setUser(null));
-        dispatch(clearState());
-        dispatch(clearFavorites());
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const handleLogOut = () => {};
 
   return (
     <header className={css.header}>

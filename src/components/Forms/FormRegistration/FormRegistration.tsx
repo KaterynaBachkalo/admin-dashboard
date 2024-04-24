@@ -1,18 +1,15 @@
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+// import { useDispatch } from "react-redux";
+// import { toast } from "react-toastify";
 import * as Yup from "yup";
 import css from "./FormRegistration.module.css";
 import { ReactComponent as OpenEyeIcon } from "../../../img/openeye.svg";
 import { ReactComponent as ClosedEyeIcon } from "../../../img/closeeye.svg";
 import { ReactComponent as GoogleIcon } from "../../../img/google-icon.svg";
 
-import { auth } from "../../../firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { setUser } from "../../../redux/authSlice";
-import { useNavigate } from "react-router-dom";
-import AuthProvider from "../../../auth_google";
+// import { setUser } from "../../../redux/authSlice";
+// import { useNavigate } from "react-router-dom";
 
 interface IForms {
   name: string;
@@ -26,10 +23,10 @@ interface IProps {
 
 const FormRegistration: FC<IProps> = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [openGoogleAuth, setOpenGoogleAuth] = useState(false);
+  const [, setOpenGoogleAuth] = useState(false);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     name: Yup.string().required(`Enter name, please`),
@@ -45,35 +42,6 @@ const FormRegistration: FC<IProps> = ({ onClose }) => {
   const initialValues: IForms = { name: "", email: "", password: "" };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
-    try {
-      const signUp = await createUserWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
-      await updateProfile(signUp.user, {
-        displayName: values.name,
-      });
-      const user = signUp.user;
-
-      dispatch(
-        setUser({
-          id: user.uid,
-          email: values.email,
-          name: values.name,
-        })
-      );
-      navigate("/nannies");
-      toast.success(`Success registration`);
-    } catch (error: any) {
-      if (error.code === "auth/email-already-in-use") {
-        toast.error("Email already in use");
-      } else {
-        console.error(error);
-      }
-    }
-    resetForm();
-
     onClose(true);
   };
 
@@ -138,7 +106,6 @@ const FormRegistration: FC<IProps> = ({ onClose }) => {
         <GoogleIcon />
         Enter with Google
       </button>
-      {openGoogleAuth && <AuthProvider />}
     </>
   );
 };

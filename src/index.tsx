@@ -14,7 +14,7 @@ root.render(
   <>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <BrowserRouter basename="/nanny-services">
+        <BrowserRouter basename="/read-journey">
           <App />
         </BrowserRouter>
       </PersistGate>

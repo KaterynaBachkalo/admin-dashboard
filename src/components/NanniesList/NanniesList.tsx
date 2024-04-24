@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import NanniesCard from "../NanniesCard/NanniesCard";
-import { ref, onValue } from "firebase/database";
-import { db } from "../../firebase";
+
 import { INanny } from "../../types";
 import css from "./NanniesList.module.css";
 import { useSelector } from "react-redux";
@@ -15,7 +14,6 @@ import {
   setCurrentPage,
   setError,
   setLoading,
-  setNannies,
   setNextPage,
 } from "../../redux/nanniesSlice";
 import Loader from "../Loader/Loader";
@@ -25,7 +23,7 @@ const NanniesList: FC = () => {
   const isLoading = useSelector(selectIsLoading);
   const filter = useSelector(selectFilter);
 
-  const [loadedNannies, setLoadedNannies] = useState<INanny[]>([]);
+  const [loadedNannies] = useState<INanny[]>([]);
   const [visibleNannies, setVisibleNannies] = useState<INanny[]>([]);
 
   const nanniesPerPage = 3;
@@ -46,16 +44,6 @@ const NanniesList: FC = () => {
     try {
       dispatch(setLoading(true));
       dispatch(setError(null));
-
-      const unsubscribe = onValue(ref(db), (snapshot) => {
-        const data = snapshot.val();
-
-        if (data) {
-          dispatch(setNannies(data));
-          setLoadedNannies(data);
-        }
-      });
-      return () => unsubscribe();
     } catch (error) {
       dispatch(setLoading(false));
       dispatch(setError(error));

@@ -1,15 +1,10 @@
 import { Field, Formik, Form, ErrorMessage } from "formik";
 import { FC, useState } from "react";
-import { toast } from "react-toastify";
 import * as Yup from "yup";
 import css from "./FormLogin.module.css";
 import { ReactComponent as OpenEyeIcon } from "../../../img/openeye.svg";
 import { ReactComponent as ClosedEyeIcon } from "../../../img/closeeye.svg";
 import { ReactComponent as GoogleIcon } from "../../../img/google-icon.svg";
-import { auth } from "../../../firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import AuthProvider from "../../../auth_google";
 
 interface IForms {
   email: string;
@@ -22,9 +17,6 @@ interface IProps {
 
 const FormLogin: FC<IProps> = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [openGoogleAuth, setOpenGoogleAuth] = useState(false);
-
-  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     email: Yup.string()
@@ -39,28 +31,12 @@ const FormLogin: FC<IProps> = ({ onClose }) => {
   const initialValues: IForms = { email: "", password: "" };
 
   const onSubmit = async (values: any, { resetForm }: any) => {
-    try {
-      const signIn = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
-      const user = signIn.user;
-
-      toast.success(`${user.displayName}, you have successfully logged in!`);
-
-      navigate("/nannies");
-    } catch (error) {
-      toast.error("Invalid data. Sign in is failed. Please try again.");
-    }
     resetForm();
 
     onClose(true);
   };
 
-  const handleGoogleAuth = () => {
-    setOpenGoogleAuth(true);
-  };
+  const handleGoogleAuth = () => {};
 
   return (
     <>
@@ -115,7 +91,6 @@ const FormLogin: FC<IProps> = ({ onClose }) => {
         <GoogleIcon />
         Enter with Google
       </button>
-      {openGoogleAuth && <AuthProvider />}
     </>
   );
 };
