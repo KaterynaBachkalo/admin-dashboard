@@ -1,6 +1,6 @@
-import { Reducer, configureStore } from "@reduxjs/toolkit";
-import { nanniesReducer } from "./nanniesSlice";
-import { filterReducer } from "./filterSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+// import { nanniesReducer } from "./nanniesSlice";
+// import { filterReducer } from "./filterSlice";
 
 import {
   persistStore,
@@ -13,20 +13,21 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { usersReducer } from "./authSlice";
+import { authReducer } from "./auth/authSlice";
 
-const favoriteConfig = {
-  key: "favorites",
+const authConfig = {
+  key: "auth",
   storage,
-  whitelist: ["favorites"],
+  whitelist: ["token"],
 };
 
+const rootReducer = combineReducers({
+  auth: persistReducer(authConfig, authReducer),
+  // water: waterReducer,
+});
+
 export const store = configureStore({
-  reducer: {
-    nannies: persistReducer(favoriteConfig, nanniesReducer) as Reducer,
-    filter: filterReducer,
-    users: usersReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -36,3 +37,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
