@@ -13,12 +13,28 @@
   font-weight: 600;
   line-height: 1.21;
   color: rgb(29, 30, 33);
+  margin-bottom: 40px;
+}
+
+@media only screen and (min-width: 1440px) {
+  .wrap {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    align-items: flex-end;
+  }
+
+  .text {
+    width: 620px;
+    margin-bottom: 0;
+  }
 }
 
 .backgroundContainer {
   width: 100%;
   max-width: 375px;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .background {
@@ -58,7 +74,6 @@
   }
 
   .background {
-    margin-left: auto;
     background-position: 198px 0;
   }
 }
@@ -66,7 +81,7 @@
 @media only screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
-    padding: 28px 253px 28px 100px;
+    padding: 28px 245px 5px 100px;
   }
 
   .header {

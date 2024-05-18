@@ -19,20 +19,22 @@ const LoginPage = () => {
             </Link>
           </nav>
         </header>
-        <p className={css.text}>
-          Your medication,
-          <img
-            srcSet={`${ImagePill375_1x} 95w, ${ImagePill375_2x} 190w, ${ImagePill768_1x} 179w, ${ImagePill768_2x} 358w`}
-            sizes="(min-width: 768px) 179px, (min-width: 320px) 95px, 100vw"
-            src={ImagePill375_1x}
-            alt="white round pill"
-            className={css.inlineImage}
-            loading="lazy"
-          />
-          delivered Say goodbye to all{" "}
-          <span className={css.span}>your healthcare</span> worries with us
-        </p>
-        <FormLogin />
+        <div className={css.wrap}>
+          <p className={css.text}>
+            Your medication,
+            <img
+              srcSet={`${ImagePill375_1x} 95w, ${ImagePill375_2x} 190w, ${ImagePill768_1x} 179w, ${ImagePill768_2x} 358w`}
+              sizes="(min-width: 768px) 179px, (min-width: 320px) 95px, 100vw"
+              src={ImagePill375_1x}
+              alt="white round pill"
+              className={css.inlineImage}
+              loading="lazy"
+            />
+            delivered Say goodbye to all{" "}
+            <span className={css.span}>your healthcare</span> worries with us
+          </p>
+          <FormLogin />
+        </div>
       </div>
       <div className={css.backgroundContainer}>
         <div className={css.background}></div>

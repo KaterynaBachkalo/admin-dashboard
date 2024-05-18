@@ -1,9 +1,9 @@
-import { Field, Formik, Form, ErrorMessage } from "formik";
 import { FC, useState } from "react";
-import * as Yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import css from "./FormLogin.module.css";
-import { ReactComponent as OpenEyeIcon } from "../../img/openeye.svg";
-import { ReactComponent as ClosedEyeIcon } from "../../img/closeeye.svg";
+import Icon from "../Icon";
 
 interface IForms {
   email: string;
@@ -13,74 +13,57 @@ interface IForms {
 const FormLogin: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Invalid email format")
-      .required(`Enter email, please`),
-    password: Yup.string()
-      .required(`Enter password, please`)
-      .min(8, `Min 8 characters`)
-      .max(64, `Max 64 characters`),
+  const schema = yup
+    .object({
+      email: yup.string().email().required(),
+      password: yup.string().required(),
+    })
+    .required();
+
+  const {
+    register,
+    handleSubmit,
+
+    formState: { errors },
+  } = useForm<IForms>({
+    resolver: yupResolver(schema),
   });
-
-  const initialValues: IForms = { email: "", password: "" };
-
-  const onSubmit = async (values: any, { resetForm }: any) => {
-    resetForm();
-
-    // onClose(true);
-  };
+  const onSubmit = (data: IForms) => console.log(data);
 
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        <Form className={css.form}>
-          <div className={css.inputWrap}>
-            <div className={css.wrap}>
-              <Field
-                type="text"
-                name="email"
-                placeholder="Email"
-                className={css.input}
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className={css.errormessage}
-              />
-            </div>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={css.wrap}>
+        <input
+          {...register("email")}
+          className={css.input}
+          placeholder="Email address"
+        />
+        <p className={css.errormessage}>{errors.email?.message}</p>
 
-            <div className={css.wrap}>
-              <Field
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Password"
-                className={css.input}
-              />
-              <div onClick={() => setShowPassword(!showPassword)}>
-                {!showPassword ? (
-                  <ClosedEyeIcon className={css.iconeye} />
-                ) : (
-                  <OpenEyeIcon className={css.iconeye} />
-                )}
-              </div>
-              <ErrorMessage
-                name="password"
-                component="div"
-                className={css.errormessage}
-              />
+        <div className={css.inputWrap}>
+          <input
+            {...register("password")}
+            className={css.input}
+            placeholder="Password"
+            type={showPassword ? "text" : "password"}
+          />
+          {showPassword ? (
+            <div className={css.icon} onClick={() => setShowPassword(false)}>
+              <Icon name="openeye" />
             </div>
-          </div>
-          <button type="submit" className={css.button}>
-            Submit
-          </button>
-        </Form>
-      </Formik>
-    </>
+          ) : (
+            <div className={css.icon} onClick={() => setShowPassword(true)}>
+              <Icon name="closeeye" />
+            </div>
+          )}
+        </div>
+        <p className={css.errormessage}>{errors.password?.message}</p>
+      </div>
+
+      <button type="submit" className={css.button}>
+        Log in
+      </button>
+    </form>
   );
 };
 
