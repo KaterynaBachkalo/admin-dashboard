@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ReactComponent as IconArrowUp } from "../../img/arrowup.svg";
 import css from "./ScrollToTopButton.module.css";
+import Icon from "../Icon";
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,8 +28,11 @@ const ScrollToTopButton = () => {
   }, []);
 
   return (
-    <div className={`${css.scroll} ${isVisible ? css.visible : ""}`}>
-      <IconArrowUp onClick={scrollToTop} className={css.IconScroll} />
+    <div
+      className={`${css.scroll} ${isVisible ? css.visible : ""}`}
+      onClick={scrollToTop}
+    >
+      <Icon name="chevron-up" />
     </div>
   );
 };
