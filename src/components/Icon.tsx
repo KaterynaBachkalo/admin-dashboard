@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import sprite from "../img/icons/sprite.svg";
+import sprite from "../img/sprite.svg";
 
 interface IProps {
   name: string;
@@ -9,7 +9,7 @@ interface IProps {
 
 const Icon: FC<IProps> = ({ name, width = 18, height = 18 }) => (
   <svg width={width} height={height}>
-    <use href={`${sprite}#${name}`} />
+    <use xlinkHref={`${sprite}#${name}`} />
   </svg>
 );
 
