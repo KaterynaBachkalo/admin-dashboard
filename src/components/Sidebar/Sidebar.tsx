@@ -1,3 +1,4 @@
+import Icon from "../Icon";
 import css from "./Sidebar.module.css";
 import { NavLink } from "react-router-dom";
 
@@ -5,29 +6,41 @@ const Sidebar = () => {
   const handleLogOut = () => {};
 
   return (
-    <nav className={css.navigation}>
-      <NavLink to="/" className={css.logo}>
-        Nanny.Services
-      </NavLink>
+    <div>
+      <nav className={css.navigation}>
+        <ul className={css.list}>
+          <li>
+            <NavLink to="/dashboard" className={css.link}>
+              <Icon name="dashboard" />
+            </NavLink>
+          </li>
 
-      <div className={css.wraplistSpace}>
-        <div className={css.wraplist}>
-          <ul className={css.list}>
-            <li>
-              <NavLink to="/" className={css.link}>
-                Home
-              </NavLink>
-            </li>
+          <li>
+            <NavLink to="/orders" className={css.link}>
+              <Icon name="orders" />
+            </NavLink>
+          </li>
 
-            <li>
-              <NavLink to="/" className={css.link}>
-                Nannies
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+          <li>
+            <NavLink to="/products" className={css.link}>
+              <Icon name="products" />
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/suppliers" className={css.link}>
+              <Icon name="suppliers" />
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink to="/customers" className={css.link}>
+              <Icon name="customers" />
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
 };
 
