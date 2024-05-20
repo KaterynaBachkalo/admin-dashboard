@@ -1,12 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import { SharedLayout } from "./components/SharedLayout/SharedLayout";
-import { lazy } from "react";
-// import { useDispatch } from "react-redux";
-// import { setUser } from "./redux/authSlice";
+import { lazy, useEffect } from "react";
 
 import RestrictedRoute from "./components/RestrictedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import { selectAuthIsLoading } from "./redux/auth/selectors";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { refreshUserThunk } from "./redux/auth/operations";
 
 const AllProductsPage = lazy(
   () => import("./pages/AllProductsPage/AllProductsPage")
@@ -21,13 +23,17 @@ const CustomersDataPage = lazy(
 );
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshUserThunk() as any);
+  }, [dispatch]);
 
   return (
     <>
       <Routes>
         <Route
-          path="/"
+          path="/login"
           element={<RestrictedRoute component={<LoginPage />} redirectTo="/" />}
         />
         <Route
