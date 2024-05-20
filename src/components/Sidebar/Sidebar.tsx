@@ -1,13 +1,24 @@
+import { FC, useState } from "react";
 import Icon from "../Icon";
 import css from "./Sidebar.module.css";
 import { NavLink } from "react-router-dom";
 
-const Sidebar = () => {
+interface IProps {
+  onClose: () => void;
+}
+
+const Sidebar: FC<IProps> = ({ onClose }) => {
+  const [openMenu, setOpenMenu] = useState(false);
+
   const handleLogOut = () => {};
 
   return (
-    <div>
+    <div className={css.sidebar}>
       <nav className={css.navigation}>
+        <div onClick={onClose} className={css.icon}>
+          <Icon name="close" width={32} height={32} />
+        </div>
+
         <ul className={css.list}>
           <li>
             <NavLink to="/dashboard" className={css.link}>

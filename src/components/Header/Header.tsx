@@ -2,15 +2,19 @@ import { Link } from "react-router-dom";
 import css from "./Header.module.css";
 import LogoAuthImage from "../../img/logoAuth.png";
 import Icon from "../Icon";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 import { logOutThunk } from "../../redux/auth/operations";
 // import { useSelector } from "react-redux";
 // import { selectCurrentUser } from "../../redux/auth/selectors";
 
-const Header = () => {
+interface IProps {
+  onOpen: (value: boolean) => void;
+}
+
+const Header: FC<IProps> = ({ onOpen }) => {
   // const currentUser = useSelector(selectCurrentUser);
-  const [openMenu, setOpenMenu] = useState(false);
+
   const [iconName, setIconName] = useState("logout");
 
   const dispatch = useDispatch();
@@ -22,15 +26,9 @@ const Header = () => {
   return (
     <header className={css.header}>
       <nav className={css.navigation}>
-        {openMenu ? (
-          <div onClick={() => setOpenMenu(false)} className={css.icon}>
-            <Icon name="close" width={32} height={32} />
-          </div>
-        ) : (
-          <div onClick={() => setOpenMenu(true)} className={css.icon}>
-            <Icon name="menu-burger" width={32} height={32} />
-          </div>
-        )}
+        <div onClick={() => onOpen(true)} className={css.icon}>
+          <Icon name="menu-burger" width={32} height={32} />
+        </div>
         <Link to="/" className={css.logo}>
           <img src={LogoAuthImage} alt="logo" />
           <div>

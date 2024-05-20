@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
 import Header from "../Header/Header";
@@ -10,10 +10,12 @@ import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
 import Sidebar from "../Sidebar/Sidebar";
 
 export const SharedLayout = () => {
+  const [isOpenMenu, setOpenMenu] = useState(false);
+
   return (
     <div>
-      <Header />
-      <Sidebar />
+      <Header onOpen={setOpenMenu} />
+      {isOpenMenu && <Sidebar onClose={() => setOpenMenu(false)} />}
       <ScrollToTopButton />
       <ToastContainer
         position="top-right"

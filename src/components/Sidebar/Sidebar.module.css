@@ -1,13 +1,22 @@
-.container {
-  min-height: 88px;
-  max-width: 1440px;
-  padding: 20px calc(25px + (128 - 25) * ((100vw - 320px) / (1440 - 320)));
-  margin: 0 auto;
+.sidebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 78px;
+  padding: 20px;
+  background-color: rgb(247, 248, 250);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
-@media only screen and (min-width: 1441px) {
-  .container {
-    padding: 20px 128px;
+@media only screen and (min-width: 1440px) {
+  .sidebar {
+    position: relative;
+    height: 100%;
+    width: 78px;
+    padding: 20px;
   }
 }
 
@@ -39,7 +48,9 @@
 
 .list {
   display: flex;
-  flex-wrap: nowrap;
+
+  flex-direction: column;
+
   align-items: center;
 
   gap: 40px;
