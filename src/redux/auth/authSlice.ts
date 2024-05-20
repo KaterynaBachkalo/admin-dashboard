@@ -55,7 +55,7 @@ const INITIAL_STATE: IState = {
     email: null,
     name: null,
   },
-  authenticated: false,
+  authenticated: true,
   isLoading: false,
   error: null,
 };

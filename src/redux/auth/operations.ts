@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { UnknownAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 export const adminInstance = axios.create({
