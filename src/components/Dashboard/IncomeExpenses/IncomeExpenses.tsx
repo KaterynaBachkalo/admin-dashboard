@@ -15,32 +15,22 @@ interface Person {
 
 const columns: ColumnDef<Person>[] = [
   {
-    header: "Recent Customers",
+    header: "Income/Expenses",
     footer: (props) => props.column.id,
     columns: [
       {
-        accessorKey: "name",
-        header: "Name",
-        cell: ({ row }) => (
-          <div className={css.cellWrap}>
-            <img
-              src={row.original.avatar}
-              alt={row.original.name}
-              className={css.avatar}
-            />
-            {row.original.name}
-          </div>
-        ),
+        accessorKey: "today",
+        header: "Today",
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "email",
-        header: "Email",
+        accessorKey: "2",
+        header: "",
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "spent",
-        header: "Spent",
+        accessorKey: "3",
+        header: "",
         footer: (props) => props.column.id,
       },
     ],
@@ -50,10 +40,9 @@ const columns: ColumnDef<Person>[] = [
 const IncomeExpenses = () => {
   const data = [
     {
-      name: "Alex Shatov",
-      email: "alexshatov@gmail.com",
-      spent: 2890.66,
-      avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+      today: "Expense",
+      2: "Qonto billing",
+      3: -49.88,
     },
     {
       name: "Philip Harbach",

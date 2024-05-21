@@ -29,7 +29,6 @@
 
   background: rgb(255, 255, 255);
   padding: 14px;
-  border-right: 1px solid rgba(29, 30, 33, 0.08);
 }
 
 .row {
@@ -40,7 +39,6 @@
   font-weight: 500;
   line-height: 1.16;
   background: rgb(255, 255, 255);
-  border-right: 1px solid rgba(29, 30, 33, 0.08);
   border-top: 1px solid rgba(29, 30, 33, 0.08);
 }
 
