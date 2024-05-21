@@ -1,13 +1,12 @@
 .container {
-  padding: calc(250px + (152 - 250) * ((100vw - 320px) / (1440 - 320)))
-    calc(15px + (128 - 15) * ((100vw - 320px) / (1440 - 320))) 0
-    calc(15px + (128 - 15) * ((100vw - 320px) / (1440 - 320)));
-  max-width: 1440px;
+  padding: 100px 20px 20px 20px;
+  max-width: 375px;
   margin: 0 auto;
 }
 
-@media only screen and (min-width: 1441px) {
+@media only screen and (min-width: 768px) {
   .container {
-    padding: 152px 128px 0 128px;
+    padding: 100px 32px 32px 32px;
+    max-width: 768px;
   }
 }
