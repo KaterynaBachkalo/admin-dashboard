@@ -15,7 +15,7 @@ export const SharedLayout = () => {
   return (
     <div>
       <Header onOpen={setOpenMenu} />
-      {isOpenMenu && <Sidebar onClose={() => setOpenMenu(false)} />}
+      <Sidebar onClose={() => setOpenMenu(false)} isOpen={isOpenMenu} />
       <ScrollToTopButton />
       <ToastContainer
         position="top-right"

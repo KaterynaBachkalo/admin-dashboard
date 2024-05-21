@@ -24,6 +24,10 @@
   gap: 20px;
   align-items: center;
 }
+.wrapText {
+  display: flex;
+  flex-direction: column;
+}
 
 .logoTitle {
   color: rgb(29, 30, 33);
@@ -32,7 +36,26 @@
   line-height: 1.2;
 }
 
-.logotext {
+.subTitle {
+  display: flex;
+  align-items: center;
+}
+
+.pathname {
+  margin-right: 8px;
+  color: rgba(29, 30, 33, 0.4);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.stroke {
+  border: 1px solid rgba(29, 30, 33, 0.4);
+  height: 12px;
+  line-height: 1;
+}
+
+.email {
+  margin-left: 8px;
   color: rgba(29, 30, 33, 0.4);
   font-size: 12px;
   line-height: 1.5;
@@ -64,6 +87,19 @@
   .iconLogout {
     cursor: pointer;
     box-shadow: 0px -1px 7px 0px rgba(71, 71, 71, 0.05);
+    background-color: rgb(89, 177, 122);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+  }
+
+  .iconLogout:hover {
+    background-color: rgb(89, 177, 122);
   }
 }
 

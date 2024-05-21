@@ -1,12 +1,10 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { SharedLayout } from "./components/SharedLayout/SharedLayout";
 import { lazy, useEffect } from "react";
 
 import RestrictedRoute from "./components/RestrictedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import { selectAuthIsLoading } from "./redux/auth/selectors";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { refreshUserThunk } from "./redux/auth/operations";
 
@@ -38,8 +36,11 @@ function App() {
         />
         <Route
           path="/"
-          element={<PrivateRoute component={<SharedLayout />} redirectTo="/" />}
+          element={
+            <PrivateRoute component={<SharedLayout />} redirectTo="/login" />
+          }
         >
+          <Route path="/" element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<DasboardPage />} />
           <Route path="orders" element={<AllOrdersPage />} />
           <Route path="products" element={<AllProductsPage />} />
