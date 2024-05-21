@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/admin-dashboard/static/css/main.b85ee332.css",
-    "main.js": "/admin-dashboard/static/js/main.694d2f3a.js",
+    "main.css": "/admin-dashboard/static/css/main.4cd2bd33.css",
+    "main.js": "/admin-dashboard/static/js/main.88c75967.js",
     "static/js/366.6e705628.chunk.js": "/admin-dashboard/static/js/366.6e705628.chunk.js",
-    "static/css/899.e898625a.chunk.css": "/admin-dashboard/static/css/899.e898625a.chunk.css",
+    "static/css/899.f3578b0c.chunk.css": "/admin-dashboard/static/css/899.f3578b0c.chunk.css",
     "static/js/899.f5937b2e.chunk.js": "/admin-dashboard/static/js/899.f5937b2e.chunk.js",
     "static/css/784.cbcf3ea1.chunk.css": "/admin-dashboard/static/css/784.cbcf3ea1.chunk.css",
     "static/js/784.d57b09d7.chunk.js": "/admin-dashboard/static/js/784.d57b09d7.chunk.js",
@@ -17,10 +17,10 @@
     "static/media/elements2x.png": "/admin-dashboard/static/media/elements2x.52e0d3f57d930966c369.png",
     "static/media/sprite.svg": "/admin-dashboard/static/media/sprite.1c277ed6c7e34553c3d5dde723e765f6.svg",
     "index.html": "/admin-dashboard/index.html",
-    "main.b85ee332.css.map": "/admin-dashboard/static/css/main.b85ee332.css.map",
-    "main.694d2f3a.js.map": "/admin-dashboard/static/js/main.694d2f3a.js.map",
+    "main.4cd2bd33.css.map": "/admin-dashboard/static/css/main.4cd2bd33.css.map",
+    "main.88c75967.js.map": "/admin-dashboard/static/js/main.88c75967.js.map",
     "366.6e705628.chunk.js.map": "/admin-dashboard/static/js/366.6e705628.chunk.js.map",
-    "899.e898625a.chunk.css.map": "/admin-dashboard/static/css/899.e898625a.chunk.css.map",
+    "899.f3578b0c.chunk.css.map": "/admin-dashboard/static/css/899.f3578b0c.chunk.css.map",
     "899.f5937b2e.chunk.js.map": "/admin-dashboard/static/js/899.f5937b2e.chunk.js.map",
     "784.cbcf3ea1.chunk.css.map": "/admin-dashboard/static/css/784.cbcf3ea1.chunk.css.map",
     "784.d57b09d7.chunk.js.map": "/admin-dashboard/static/js/784.d57b09d7.chunk.js.map",
@@ -30,7 +30,7 @@
     "271.71cab48d.chunk.js.map": "/admin-dashboard/static/js/271.71cab48d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b85ee332.css",
-    "static/js/main.694d2f3a.js"
+    "static/css/main.4cd2bd33.css",
+    "static/js/main.88c75967.js"
   ]
 }
