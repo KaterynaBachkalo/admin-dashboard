@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ScrollToTopButton from "../ScrollToTopButton/ScrollToTopButton";
 import Sidebar from "../Sidebar/Sidebar";
 
+import css from "./SharedLayout.module.css";
+
 export const SharedLayout = () => {
   const [isOpenMenu, setOpenMenu] = useState(false);
 
@@ -16,6 +18,11 @@ export const SharedLayout = () => {
     <div>
       <Header onOpen={setOpenMenu} />
       <Sidebar onClose={() => setOpenMenu(false)} isOpen={isOpenMenu} />
+      {isOpenMenu && (
+        <div className={css.backdrop} onClick={() => setOpenMenu(false)}>
+          <Sidebar onClose={() => setOpenMenu(false)} isOpen={isOpenMenu} />
+        </div>
+      )}
       <ScrollToTopButton />
       <ToastContainer
         position="top-right"
