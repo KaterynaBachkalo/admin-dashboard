@@ -1,29 +1,7 @@
-@media only screen and (max-width: 1439px) {
-  .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
-
-    background: rgba(29, 30, 33, 0.3);
-    z-index: 100;
-  }
-}
-
-.hideBackdrop {
-  display: none;
-}
-
-.showBackdrop {
-  display: block;
-}
-
 .sidebar {
-  position: absolute;
-  left: 0;
+  position: fixed;
   top: 0;
+  left: 0;
   height: 100%;
   width: 78px;
   padding: 92px 20px 20px 20px;
@@ -34,11 +12,15 @@
   border-right: 1px solid rgba(29, 30, 33, 0.1);
 }
 
+.hideBackdrop {
+  display: none;
+}
+
 @media only screen and (min-width: 1440px) {
   .sidebar {
-    position: absolute;
-    left: 0;
+    position: fixed;
     top: 80px;
+
     display: flex;
     flex-direction: column;
     border-right: 1px solid rgba(29, 30, 33, 0.1);
@@ -55,8 +37,6 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-
-  margin-bottom: auto;
 }
 
 .icon {
@@ -110,6 +90,7 @@
   cursor: pointer;
   box-shadow: 0px -1px 7px 0px rgba(71, 71, 71, 0.05);
   background-color: rgb(89, 177, 122);
+  margin-top: auto;
 }
 
 @media only screen and (min-width: 1440px) {
