@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import css from "./AllOrdersPage.module.css";
-import FilterForm from "../../components/AllOrders/FilterForm/FilterForm";
-import AllOrdersTable from "../../components/AllOrders/AllOrders/AllOrdersTable";
+import FilterForm from "../../components/FilterForm/FilterForm";
+import AllOrdersTable from "../../components/AllOrders/AllOrdersTable";
 
 const AllOrdersPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
     <section className={css.container}>
-      <FilterForm setSearchQuery={setSearchQuery} />
+      <FilterForm setSearchQuery={setSearchQuery} placeholder="User name" />
       <AllOrdersTable searchQuery={searchQuery} />
     </section>
   );
