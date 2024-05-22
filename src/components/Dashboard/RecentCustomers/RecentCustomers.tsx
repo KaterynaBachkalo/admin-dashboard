@@ -32,11 +32,13 @@ const columns: ColumnDef<Person>[] = [
           </div>
         ),
         footer: (props) => props.column.id,
+        size: 223,
       },
       {
         accessorKey: "email",
         header: "Email",
         footer: (props) => props.column.id,
+        size: 269,
       },
       {
         accessorKey: "spent",
@@ -105,6 +107,7 @@ const RecentCustomersTable = () => {
                 key={header.id}
                 colSpan={header.colSpan}
                 className={index === 0 ? css.header : css.subheader}
+                style={{ width: header.getSize() }}
               >
                 {header.isPlaceholder
                   ? null
@@ -123,7 +126,11 @@ const RecentCustomersTable = () => {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
                 return (
-                  <td key={cell.id} className={css.row}>
+                  <td
+                    key={cell.id}
+                    className={css.row}
+                    style={{ width: cell.column.getSize() }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );

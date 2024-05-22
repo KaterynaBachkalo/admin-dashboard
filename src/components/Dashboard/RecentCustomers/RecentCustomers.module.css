@@ -9,6 +9,12 @@
   text-align: left;
 }
 
+@media only screen and (min-width: 1440px) {
+  .table {
+    margin-bottom: 0;
+  }
+}
+
 .header {
   color: rgb(29, 30, 33);
   font-size: 16px;
@@ -55,6 +61,30 @@
   .cellWrap {
     align-items: center;
     flex-direction: row;
+  }
+
+  .header,
+  .subheader,
+  .row {
+    padding: 20px;
+  }
+
+  .header {
+    font-size: 18px;
+  }
+
+  .row {
+    font-size: 16px;
+  }
+
+  .subheader {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .cellWrap {
+    flex-wrap: nowrap;
   }
 }
 
