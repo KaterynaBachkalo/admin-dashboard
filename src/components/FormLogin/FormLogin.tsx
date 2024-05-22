@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,7 +10,7 @@ interface IForms {
   password: string;
 }
 
-const FormLogin: FC = () => {
+const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const schema = yup

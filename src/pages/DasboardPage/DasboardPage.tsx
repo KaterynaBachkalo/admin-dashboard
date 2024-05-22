@@ -8,8 +8,10 @@ const DasboardPage = () => {
   return (
     <section className={css.container}>
       <Statistics />
-      <RecentCustomers />
-      <IncomeExpenses />
+      <div className={css.tables}>
+        <RecentCustomers />
+        <IncomeExpenses />
+      </div>
     </section>
   );
 };
