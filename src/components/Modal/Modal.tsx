@@ -1,8 +1,8 @@
-import React, { FC, ReactNode, useRef } from "react";
+import { FC, ReactNode, useRef } from "react";
 import { createPortal } from "react-dom";
 import css from "./Modal.module.css";
 import useCloseModals from "../../services/closeModals";
-import closeIcon from "../../img/close.svg";
+import Icon from "../Icon";
 
 const modalRoot: Element | null = document.querySelector("#root-modal");
 
@@ -31,7 +31,7 @@ const Modal: FC<IProps> = ({ onClose, children, title }) => {
             onClick={(event) => event.stopPropagation()}
           >
             <button className={css.btnClose} onClick={() => onClose(false)}>
-              <img src={closeIcon} width={32} alt="Close" />
+              <Icon name="close" />
             </button>
             <div className={css.title}>{title}</div>
             <div>{children}</div>
