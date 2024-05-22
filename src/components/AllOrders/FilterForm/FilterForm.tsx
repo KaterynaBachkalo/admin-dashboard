@@ -3,14 +3,21 @@ import css from "./FilterForm.module.css";
 import { useForm } from "react-hook-form";
 
 import Icon from "../../Icon";
+import { FC } from "react";
 
 interface IForms {
   name: string;
 }
 
-const FilterForm = () => {
+interface IProps {
+  setSearchQuery: (value: string) => void;
+}
+
+const FilterForm: FC<IProps> = ({ setSearchQuery }) => {
   const { register, handleSubmit } = useForm<IForms>();
-  const onSubmit = (data: IForms) => console.log(data);
+  const onSubmit = (data: IForms) => {
+    setSearchQuery(data.name);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
