@@ -2,7 +2,7 @@ import css from "./FilterForm.module.css";
 
 import { useForm } from "react-hook-form";
 
-import Icon from "../../Icon";
+import Icon from "../Icon";
 import { FC } from "react";
 
 interface IForms {
@@ -11,9 +11,10 @@ interface IForms {
 
 interface IProps {
   setSearchQuery: (value: string) => void;
+  placeholder: string;
 }
 
-const FilterForm: FC<IProps> = ({ setSearchQuery }) => {
+const FilterForm: FC<IProps> = ({ setSearchQuery, placeholder }) => {
   const { register, handleSubmit } = useForm<IForms>();
   const onSubmit = (data: IForms) => {
     setSearchQuery(data.name);
@@ -25,7 +26,7 @@ const FilterForm: FC<IProps> = ({ setSearchQuery }) => {
         <input
           {...register("name")}
           className={css.input}
-          placeholder="User Name"
+          placeholder={placeholder}
         />
 
         <button type="submit" className={css.button}>
