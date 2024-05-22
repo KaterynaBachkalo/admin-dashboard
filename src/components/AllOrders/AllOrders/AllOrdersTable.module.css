@@ -1,5 +1,5 @@
 .table {
-  margin-bottom: 68px;
+  margin-bottom: 20px;
   border-collapse: separate; /* Используем separate для корректной работы border-radius */
   width: 671px;
   border-spacing: 0;
@@ -45,7 +45,7 @@
 }
 
 .row {
-  padding: 14px;
+  padding: 14px 8px 14px 14px;
 
   color: rgb(29, 30, 33);
   font-size: 12px;
@@ -97,4 +97,48 @@
 tr td:last-child,
 tr th:last-child {
   border-right: none;
+}
+
+.noResults {
+  text-align: center;
+}
+
+.col-name {
+  width: 128px;
+}
+
+.col-address {
+  width: 110px;
+}
+
+.col-products {
+  width: 96px;
+}
+
+@media only screen and (min-width: 768px) {
+  .col-name {
+    min-width: 225px;
+  }
+
+  .col-address {
+    min-width: 158px;
+  }
+
+  .col-products {
+    min-width: 131px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .col-name {
+    width: 285px;
+  }
+
+  .col-address {
+    width: 218px;
+  }
+
+  .col-products {
+    width: 191px;
+  }
 }
