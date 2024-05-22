@@ -32,13 +32,11 @@ const columns: ColumnDef<Person>[] = [
           </div>
         ),
         footer: (props) => props.column.id,
-        size: 223,
       },
       {
         accessorKey: "email",
         header: "Email",
         footer: (props) => props.column.id,
-        size: 269,
       },
       {
         accessorKey: "spent",
@@ -128,7 +126,13 @@ const RecentCustomersTable = () => {
                 return (
                   <td
                     key={cell.id}
-                    className={css.row}
+                    className={`${css.row} ${
+                      cell.column.id === "name"
+                        ? css["col-name"]
+                        : cell.column.id === "email"
+                        ? css["col-email"]
+                        : ""
+                    }`}
                     style={{ width: cell.column.getSize() }}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
