@@ -7,10 +7,9 @@ import {
 import css from "./IncomeExpenses.module.css";
 
 interface Person {
-  name: string;
-  email: string;
-  spent: number;
-  avatar: string;
+  today: string;
+  col2: string;
+  col3: number;
 }
 
 const columns: ColumnDef<Person>[] = [
@@ -24,12 +23,12 @@ const columns: ColumnDef<Person>[] = [
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "2",
+        accessorKey: "col2",
         header: "",
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "3",
+        accessorKey: "col3",
         header: "",
         footer: (props) => props.column.id,
       },
@@ -41,32 +40,28 @@ const IncomeExpenses = () => {
   const data = [
     {
       today: "Expense",
-      2: "Qonto billing",
-      3: -49.88,
+      col2: "Qonto billing",
+      col3: -49.88,
     },
     {
-      name: "Philip Harbach",
-      email: "philip.h@gmail.com",
-      spent: 2767.04,
-      avatar: "https://randomuser.me/api/portraits/men/2.jpg",
+      today: "Expense",
+      col2: "Qonto billing",
+      col3: -49.88,
     },
     {
-      name: "Mirko Fisuk",
-      email: "mirkofisuk@gmail.com",
-      spent: 2996.0,
-      avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+      today: "Expense",
+      col2: "Qonto billing",
+      col3: -49.88,
     },
     {
-      name: "Olga Semklo",
-      email: "olga.s@cool.design",
-      spent: 1220.66,
-      avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+      today: "Expense",
+      col2: "Qonto billing",
+      col3: -49.88,
     },
     {
-      name: "Burak Long",
-      email: "longburak@gmail.com",
-      spent: 1890.66,
-      avatar: "https://randomuser.me/api/portraits/men/4.jpg",
+      today: "Expense",
+      col2: "Qonto billing",
+      col3: -49.88,
     },
   ];
 
@@ -94,6 +89,7 @@ const IncomeExpenses = () => {
                 key={header.id}
                 colSpan={header.colSpan}
                 className={index === 0 ? css.header : css.subheader}
+                style={{ width: header.getSize() }}
               >
                 {header.isPlaceholder
                   ? null
@@ -112,7 +108,11 @@ const IncomeExpenses = () => {
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
                 return (
-                  <td key={cell.id} className={css.row}>
+                  <td
+                    key={cell.id}
+                    className={css.row}
+                    style={{ width: cell.column.getSize() }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 );
