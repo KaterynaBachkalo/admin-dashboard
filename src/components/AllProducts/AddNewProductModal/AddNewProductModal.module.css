@@ -118,3 +118,15 @@
   color: rgb(89, 177, 122);
   background-color: rgb(255, 255, 255);
 }
+
+/* For WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
