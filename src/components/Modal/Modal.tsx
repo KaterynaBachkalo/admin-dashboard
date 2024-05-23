@@ -31,7 +31,7 @@ const Modal: FC<IProps> = ({ onClose, children, title }) => {
             onClick={(event) => event.stopPropagation()}
           >
             <button className={css.btnClose} onClick={() => onClose(false)}>
-              <Icon name="close" />
+              <Icon name="close" width={24} height={24} />
             </button>
             <div className={css.title}>{title}</div>
             <div>{children}</div>
