@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/admin-dashboard/static/css/main.13316912.css",
-    "main.js": "/admin-dashboard/static/js/main.9abae335.js",
-    "static/css/147.5361e49e.chunk.css": "/admin-dashboard/static/css/147.5361e49e.chunk.css",
-    "static/js/147.e555037d.chunk.js": "/admin-dashboard/static/js/147.e555037d.chunk.js",
+    "main.js": "/admin-dashboard/static/js/main.40681546.js",
+    "static/css/604.2cf9558f.chunk.css": "/admin-dashboard/static/css/604.2cf9558f.chunk.css",
+    "static/js/604.18b4d8c6.chunk.js": "/admin-dashboard/static/js/604.18b4d8c6.chunk.js",
     "static/css/361.a4b8d05c.chunk.css": "/admin-dashboard/static/css/361.a4b8d05c.chunk.css",
     "static/js/361.f6a871a1.chunk.js": "/admin-dashboard/static/js/361.f6a871a1.chunk.js",
     "static/css/690.69470820.chunk.css": "/admin-dashboard/static/css/690.69470820.chunk.css",
@@ -17,12 +17,12 @@
     "static/media/pill_375_@2x.png": "/admin-dashboard/static/media/pill_375_@2x.526758c1c51d57aea1ed.png",
     "static/media/pill_768_@1x.png": "/admin-dashboard/static/media/pill_768_@1x.132268c1a91d21a2468b.png",
     "static/media/elements2x.png": "/admin-dashboard/static/media/elements2x.52e0d3f57d930966c369.png",
-    "static/media/sprite.svg": "/admin-dashboard/static/media/sprite.36370bca4b185dbf6146c52ed773bc15.svg",
+    "static/media/sprite.svg": "/admin-dashboard/static/media/sprite.605a4569a46db7bdcf739dceedfe8dfc.svg",
     "index.html": "/admin-dashboard/index.html",
     "main.13316912.css.map": "/admin-dashboard/static/css/main.13316912.css.map",
-    "main.9abae335.js.map": "/admin-dashboard/static/js/main.9abae335.js.map",
-    "147.5361e49e.chunk.css.map": "/admin-dashboard/static/css/147.5361e49e.chunk.css.map",
-    "147.e555037d.chunk.js.map": "/admin-dashboard/static/js/147.e555037d.chunk.js.map",
+    "main.40681546.js.map": "/admin-dashboard/static/js/main.40681546.js.map",
+    "604.2cf9558f.chunk.css.map": "/admin-dashboard/static/css/604.2cf9558f.chunk.css.map",
+    "604.18b4d8c6.chunk.js.map": "/admin-dashboard/static/js/604.18b4d8c6.chunk.js.map",
     "361.a4b8d05c.chunk.css.map": "/admin-dashboard/static/css/361.a4b8d05c.chunk.css.map",
     "361.f6a871a1.chunk.js.map": "/admin-dashboard/static/js/361.f6a871a1.chunk.js.map",
     "690.69470820.chunk.css.map": "/admin-dashboard/static/css/690.69470820.chunk.css.map",
@@ -35,6 +35,6 @@
   },
   "entrypoints": [
     "static/css/main.13316912.css",
-    "static/js/main.9abae335.js"
+    "static/js/main.40681546.js"
   ]
 }
