@@ -28,6 +28,7 @@ const FormLogin = () => {
   } = useForm<IForms>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit = (data: IForms) => console.log(data);
 
   return (
