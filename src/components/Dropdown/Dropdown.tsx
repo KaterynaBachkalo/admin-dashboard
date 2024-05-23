@@ -11,8 +11,8 @@ interface IProps {
 }
 
 const Dropdown: FC<IProps> = React.forwardRef(({ onSelect, onClose }, ref) => {
-  const handleClick = (selectedItem: string) => {
-    onSelect(selectedItem);
+  const handleClick = (selectedCategory: string) => {
+    onSelect(selectedCategory);
   };
 
   const inputRef = useRef(null);
@@ -23,13 +23,13 @@ const Dropdown: FC<IProps> = React.forwardRef(({ onSelect, onClose }, ref) => {
     <div className={css.dropDown} ref={inputRef}>
       <div className={css.container}>
         <ul className={css.list}>
-          {categories.map((item) => (
+          {categories.map((category) => (
             <li
-              key={item}
-              onClick={() => handleClick(item)}
+              key={category}
+              onClick={() => handleClick(category)}
               className={css.category}
             >
-              {item}
+              {category}
             </li>
           ))}
         </ul>
