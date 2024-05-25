@@ -22,11 +22,7 @@ const Modal: FC<IProps> = ({ onClose, children, title }) => {
       <div className={css.backdrop}>
         <div className={css.container}>
           <div
-            className={`${css.modal} ${
-              title === "Make an appointment with a babysitter"
-                ? css.modalBig
-                : css.modal
-            }`}
+            className={css.modal}
             ref={modalRef}
             onClick={(event) => event.stopPropagation()}
           >

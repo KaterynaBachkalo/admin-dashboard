@@ -30,10 +30,6 @@
   width: calc(100vw - 20px);
 }
 
-.modalBig {
-  width: calc(280px + (600 - 280) * ((100vw - 320px) / (1440 - 320)));
-}
-
 .btnClose {
   position: absolute;
   top: 14px;
@@ -50,5 +46,21 @@
   font-weight: 600;
   line-height: 1.2;
 
-  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+
+  .modal {
+    width: 536px;
+    padding: 40px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 40px;
+  }
 }
