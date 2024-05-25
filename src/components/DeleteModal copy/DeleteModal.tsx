@@ -8,21 +8,27 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
+  const handleDelete = () => {
+    onClose();
+  };
+
   return (
-    <div className={css.modalOverlay}>
-      <div className={css.modalContent}>
-        <p>Are you sure you want to delete {data.info}?</p>
-        <button onClick={onClose}>Cancel</button>
+    <>
+      <p className={css.text}>Are you sure you want to delete {data.info}?</p>
+      <div className={css.buttonWrap}>
         <button
-          onClick={() => {
-            // handle delete action here
-            onClose();
-          }}
+          type="submit"
+          className={css.buttonDelete}
+          onClick={handleDelete}
         >
           Delete
         </button>
+
+        <button type="button" className={css.buttonCancel} onClick={onClose}>
+          Cancel
+        </button>
       </div>
-    </div>
+    </>
   );
 };
 
