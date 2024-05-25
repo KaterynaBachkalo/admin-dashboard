@@ -1,5 +1,4 @@
 import React, { FC, LegacyRef, RefObject, useRef } from "react";
-import { generateTime } from "../../services/generateTime";
 import css from "./Dropdown.module.css";
 import useCloseDropdown from "../../services/closeDropdown";
 import { categories } from "../../data/categories";
