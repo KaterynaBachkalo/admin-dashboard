@@ -1,7 +1,7 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import css from "./AddNewProductModal.module.css";
 import Icon from "../../Icon";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Dropdown from "../../Dropdown/Dropdown";
@@ -41,6 +41,8 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
     register,
     handleSubmit,
     reset,
+    control,
+    setValue,
     formState: { errors },
   } = useForm<IForms>({
     resolver: yupResolver(schema),
@@ -56,6 +58,10 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
     setOpenDropdown(false);
   };
 
+  useEffect(() => {
+    setValue("category", selectedFilter);
+  }, [selectedFilter, setValue]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -70,11 +76,17 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
           </div>
 
           <div className={css.inputWrap}>
-            <input
-              {...register("category")}
-              className={css.input}
-              placeholder="Category"
-              value={selectedFilter}
+            <Controller
+              name="category"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Category"
+                  value={selectedFilter}
+                />
+              )}
             />
             <p className={css.errormessage}>{errors.category?.message}</p>
 
