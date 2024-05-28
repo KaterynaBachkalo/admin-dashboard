@@ -59,13 +59,12 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
           accessorKey: "action",
           header: "Action",
           cell: ({ row }) => (
-            <div className={css.buttonsWrap}>
-              <div
-                className={css.buttonEdit}
-                onClick={() => openEditModal(row.original)}
-              >
-                <Icon name="edit" width={13} height={13} />
-              </div>
+            <div
+              className={css.buttonEdit}
+              onClick={() => openEditModal(row.original)}
+            >
+              <Icon name="edit" width={13} height={13} />
+              Edit
             </div>
           ),
           footer: (props) => props.column.id,
@@ -214,7 +213,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
       )}
 
       {editModalData && (
-        <Modal onClose={closeEditModal} title="Edit product">
+        <Modal onClose={closeEditModal} title="Edit supplier">
           <EditModal onClose={closeEditModal} data={editModalData} />
         </Modal>
       )}
