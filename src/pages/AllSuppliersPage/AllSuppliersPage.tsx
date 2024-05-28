@@ -9,8 +9,10 @@ const AllSuppliersPage = () => {
 
   return (
     <section className={css.container}>
-      <FilterForm setSearchQuery={setSearchQuery} placeholder="User Name" />
-      <AddNewSupplier />
+      <div className={css.wrap}>
+        <FilterForm setSearchQuery={setSearchQuery} placeholder="User Name" />
+        <AddNewSupplier />
+      </div>
       <AllSuppliersTable searchQuery={searchQuery} />
     </section>
   );
