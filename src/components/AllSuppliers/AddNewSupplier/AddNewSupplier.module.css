@@ -1,17 +1,25 @@
-.icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 60px;
-  background: rgb(89, 177, 122);
-  fill: rgb(255, 255, 255);
+.button {
+  width: 196px;
+  height: 44px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
   cursor: pointer;
+
+  border: 1px solid rgba(89, 177, 122, 0.5);
+  background-color: transparent;
+  border-radius: 60px;
+
+  color: rgb(29, 30, 33);
+  font-family: Inter;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.28;
+  transition: all 250ms ease-in;
 }
 
-.icon:hover {
-  background: rgb(63, 148, 95);
+.button:hover {
+  background: rgb(89, 177, 122);
+  color: rgb(255, 255, 255);
 }

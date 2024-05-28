@@ -7,17 +7,13 @@ import AddNewProductModal from "../AddNewProductModal/AddNewProductModal";
 const AddNewProduct = () => {
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const openAddNewProduct = () => {
-    setOpenModal(true);
-  };
-
   const closeAddModal = () => {
     setOpenModal(false);
   };
 
   return (
     <>
-      <div className={css.icon} onClick={openAddNewProduct}>
+      <div className={css.icon} onClick={() => setOpenModal(true)}>
         <Icon name="add" width={20} height={20} />
       </div>
 
