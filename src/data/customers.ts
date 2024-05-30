@@ -1,4 +1,4 @@
-[
+export const customers = [
   {
     "photo": "https://i.imgur.com/1As0akH.png1",
     "name": "Nadia Ivanova",
