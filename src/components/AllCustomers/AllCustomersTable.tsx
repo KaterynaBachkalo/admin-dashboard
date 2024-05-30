@@ -6,12 +6,14 @@ import {
 } from "@tanstack/react-table";
 import css from "./AllCustomersTable.module.css";
 import { useEffect, useMemo, useState } from "react";
+import { customers } from "../../data/customers";
 
 export interface Person {
-  info: string;
+  avatar: string | undefined;
+  name: string;
   email: string;
   address: string;
-  phone: number;
+  phone: string;
   date: string;
 }
 
@@ -22,8 +24,18 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
       footer: (props) => props.column.id,
       columns: [
         {
-          accessorKey: "info",
-          header: "User Info",
+          accessorKey: "name",
+          header: "Name",
+          cell: ({ row }) => (
+            <div className={css.cellWrap}>
+              <img
+                src={row.original.avatar}
+                alt={row.original.name}
+                className={css.avatar}
+              />
+              {row.original.name}
+            </div>
+          ),
           footer: (props) => props.column.id,
         },
         {
@@ -50,53 +62,25 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(
-    () => [
-      {
-        info: "Alex Shatov",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: +8801736985253,
-        date: "Aug 1, 2023",
-      },
-      {
-        info: "Philip Harbach",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: +8801736985253,
-        date: "Aug 1, 2023",
-      },
-      {
-        info: "Mirko Fisuk",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: +8801736985253,
-        date: "Aug 1, 2023",
-      },
-      {
-        info: "Olga Semklo",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: +8801736985253,
-        date: "Aug 1, 2023",
-      },
-      {
-        info: "Burak Long",
-        email: "alexshatov@gmail.com",
-        address: "Mripur-1",
-        phone: +8801736985253,
-        date: "Aug 1, 2023",
-      },
-    ],
-    []
-  );
+  const myCustomers = customers.map((customer) => {
+    return {
+      avatar: customer.image || customer.photo,
+      name: customer.name,
+      email: customer.email,
+      address: customer.address,
+      phone: customer.phone,
+      date: customer.register_date,
+    };
+  });
+
+  const data = useMemo(() => myCustomers, [myCustomers]);
 
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredData(
-      data.filter((item) => item.info.toLowerCase().includes(lowercasedQuery))
+      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery, data]);
 
@@ -147,12 +131,16 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
                     <td
                       key={cell.id}
                       className={`${css.row} ${
-                        cell.column.id === "info"
-                          ? css["col-info"]
-                          : cell.column.id === "category"
-                          ? css["col-category"]
-                          : cell.column.id === "stock"
-                          ? css["col-stock"]
+                        cell.column.id === "name"
+                          ? css["col-name"]
+                          : cell.column.id === "email"
+                          ? css["col-email"]
+                          : cell.column.id === "address"
+                          ? css["col-address"]
+                          : cell.column.id === "phone"
+                          ? css["col-phone"]
+                          : cell.column.id === "date"
+                          ? css["col-date"]
                           : ""
                       }`}
                       style={{ width: cell.column.getSize() }}

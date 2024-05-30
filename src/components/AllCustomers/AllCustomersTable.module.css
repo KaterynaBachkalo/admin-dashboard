@@ -104,41 +104,65 @@ tr th:last-child {
 }
 
 .col-name {
-  width: 128px;
+  min-width: 108px;
+}
+
+.col-email {
+  width: 161px;
 }
 
 .col-address {
-  width: 110px;
+  min-width: 108px;
 }
 
-.col-products {
-  width: 96px;
+.col-phone {
+  min-width: 108px;
+}
+
+.col-date {
+  min-width: 108px;
 }
 
 @media only screen and (min-width: 768px) {
   .col-name {
-    min-width: 225px;
+    min-width: 215px;
+  }
+
+  .col-email {
+    width: 223px;
   }
 
   .col-address {
-    min-width: 158px;
+    min-width: 163px;
   }
 
-  .col-products {
-    min-width: 131px;
+  .col-phone {
+    min-width: 198px;
+  }
+
+  .col-date {
+    min-width: 165px;
   }
 }
 
 @media only screen and (min-width: 1440px) {
   .col-name {
-    width: 285px;
+    min-width: 280px;
+  }
+
+  .col-email {
+    width: 299px;
   }
 
   .col-address {
-    width: 218px;
+    min-width: 213px;
   }
 
-  .col-products {
-    width: 191px;
+  .col-phone {
+    min-width: 263px;
+  }
+
+  .col-date {
+    min-width: 225px;
   }
 }
