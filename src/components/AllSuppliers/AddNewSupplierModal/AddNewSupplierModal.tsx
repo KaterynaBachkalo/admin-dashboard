@@ -1,46 +1,67 @@
 import { FC, useEffect, useRef, useState } from "react";
-import css from "./AddNewSupplierModal.module.css";
+import "react-calendar/dist/Calendar.css";
+import Calendar from "react-calendar";
 import Icon from "../../Icon";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Dropdown from "../../Dropdown/Dropdown";
+import Dropdown from "../../DropdownStatus/Dropdown";
+import useCloseDropdown from "../../../services/closeDropdown";
+import css from "./AddNewSupplierModal.module.css";
 
 interface AddModalProps {
   onClose: () => void;
 }
 
 interface IForms {
-  productInfo: string;
-  category: string;
-  suppliers: string;
-  stock: string;
-  price: number;
+  info: string;
+  address: string;
+  company: string;
+  date: string;
+  ammount: number;
+  status: string;
 }
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
-  const [selectedFilter, setSelectedFilter] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [isOpenCalendar, setOpenCalendar] = useState(false);
+
+  const [value, onChange] = useState<Value>(null);
+
+  const myDate = value?.toString();
+  const dateArray = myDate?.split(" ").slice(1, 4);
+  const formattedDateArray = dateArray && [
+    `${dateArray[0]} ${dateArray[1]}`,
+    dateArray[2],
+  ];
+  const selectedDate = formattedDateArray?.join(", ");
 
   const iconref = useRef<HTMLDivElement | null>(null);
+  const iconDateref = useRef<HTMLDivElement | null>(null);
+  const calendarRef = useRef<HTMLDivElement | null>(null);
 
   const schema = yup
     .object({
-      productInfo: yup.string().required("Product info is required"),
-      category: yup.string().required("Category is required"),
-      suppliers: yup.string().required("Suppliers is required"),
-      stock: yup.string().required("Stock is required"),
-      price: yup
+      info: yup.string().required("Suppliers Info is required"),
+      address: yup.string().required("Address is required"),
+      company: yup.string().required("Company is required"),
+      date: yup.string().required("Date is required"),
+      ammount: yup
         .number()
-        .typeError("Price is required and must be a number")
+        .typeError("Ammount is required and must be a number")
         .required(),
+      status: yup.string().required("Status is required"),
     })
     .required();
 
   const {
     register,
     handleSubmit,
-    reset,
     control,
     setValue,
     formState: { errors },
@@ -50,17 +71,21 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
 
   const onSubmit = (data: IForms) => {
     console.log(data);
-    reset();
+
+    onClose();
   };
 
   const handleSelect = (selected: string) => {
-    setSelectedFilter(selected);
+    setSelectedStatus(selected);
     setOpenDropdown(false);
   };
 
   useEffect(() => {
-    setValue("category", selectedFilter);
-  }, [selectedFilter, setValue]);
+    setValue("status", selectedStatus);
+    selectedDate && setValue("date", selectedDate);
+  }, [selectedStatus, selectedDate, setValue]);
+
+  useCloseDropdown(setOpenCalendar, calendarRef, iconDateref);
 
   return (
     <>
@@ -68,27 +93,102 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
         <div className={css.wrap}>
           <div>
             <input
-              {...register("productInfo")}
+              {...register("info")}
               className={css.input}
-              placeholder="Product info"
+              placeholder="Suppliers Info"
             />
-            <p className={css.errormessage}>{errors.productInfo?.message}</p>
+            <p className={css.errormessage}>{errors.info?.message}</p>
+          </div>
+
+          <div>
+            <input
+              {...register("address")}
+              className={css.input}
+              placeholder="Address"
+            />
+            <p className={css.errormessage}>{errors.address?.message}</p>
+          </div>
+
+          <div>
+            <input
+              {...register("company")}
+              className={css.input}
+              placeholder="Company"
+            />
+            <p className={css.errormessage}>{errors.company?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
             <Controller
-              name="category"
+              name="date"
               control={control}
               render={({ field }) => (
                 <input
                   {...field}
                   className={css.input}
-                  placeholder="Category"
-                  value={selectedFilter}
+                  placeholder="Delivery date"
+                  value={selectedDate}
                 />
               )}
             />
-            <p className={css.errormessage}>{errors.category?.message}</p>
+            <p className={css.errormessage}>{errors.date?.message}</p>
+
+            <div
+              className={css.iconCalendar}
+              onClick={() => setOpenCalendar(!isOpenCalendar)}
+              ref={iconDateref}
+            >
+              <Icon name="calendar" width={16} height={16} />
+            </div>
+            {isOpenCalendar && (
+              <div ref={calendarRef}>
+                <Calendar
+                  onChange={(date) => {
+                    onChange(date);
+
+                    setOpenCalendar(false);
+                  }}
+                  value={value}
+                  locale="en-US"
+                  className={css.calendar}
+                  tileClassName={css.tile}
+                  navigationLabel={({ label }) => (
+                    <span className={css.label}>{label}</span>
+                  )}
+                  formatShortWeekday={(locale, date) =>
+                    date
+                      .toLocaleDateString(locale, { weekday: "short" })
+                      .substring(0, 2)
+                  }
+                />
+              </div>
+            )}
+          </div>
+
+          <div>
+            <input
+              {...register("ammount")}
+              className={css.input}
+              placeholder="Ammount"
+            />
+            <p className={css.errormessage}>{errors.ammount?.message}</p>
+          </div>
+
+          <div className={css.inputWrap}>
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Status"
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                />
+              )}
+            />
+            <p className={css.errormessage}>{errors.status?.message}</p>
 
             <div
               className={css.iconChevron}
@@ -104,34 +204,6 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
                 ref={iconref}
               />
             )}
-          </div>
-
-          <div>
-            <input
-              {...register("suppliers")}
-              className={css.input}
-              placeholder="Suppliers"
-            />
-            <p className={css.errormessage}>{errors.suppliers?.message}</p>
-          </div>
-
-          <div>
-            <input
-              {...register("stock")}
-              className={css.input}
-              placeholder="Stock"
-            />
-            <p className={css.errormessage}>{errors.stock?.message}</p>
-          </div>
-
-          <div>
-            <input
-              {...register("price")}
-              className={css.input}
-              placeholder="Price"
-              type="number"
-            />
-            <p className={css.errormessage}>{errors.price?.message}</p>
           </div>
         </div>
 
