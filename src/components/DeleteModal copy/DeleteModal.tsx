@@ -14,7 +14,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
 
   return (
     <>
-      <p className={css.text}>Are you sure you want to delete {data.info}?</p>
+      <p className={css.text}>Are you sure you want to delete {data.name}?</p>
       <div className={css.buttonWrap}>
         <button
           type="submit"

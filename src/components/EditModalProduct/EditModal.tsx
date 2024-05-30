@@ -13,11 +13,11 @@ interface EditModalProps {
 }
 
 interface IForms {
-  info: string;
+  name: string;
   category: string;
   suppliers: string;
-  stock: number;
-  price: number;
+  stock: string;
+  price: string;
 }
 
 const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
@@ -28,21 +28,14 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
   const schema = yup
     .object({
-      info: yup.string().required("Product info is required"),
+      name: yup.string().required("Product info is required"),
       category: yup.string().required("Category is required"),
       suppliers: yup.string().required("Suppliers is required"),
-      stock: yup.number().required("Stock is required"),
+      stock: yup.string().required("Stock is required"),
       price: yup
-        .number()
+        .string()
         .typeError("Price is required and must be a number")
-        .required()
-        .positive("Price must be a positive number")
-        .test(
-          "is-decimal",
-          "Price can be a decimal number",
-          (value) =>
-            value !== undefined && /^\d+(\.\d{1,2})?$/.test(value.toString())
-        ),
+        .required(),
     })
     .required();
 
@@ -55,7 +48,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
   } = useForm<IForms>({
     resolver: yupResolver(schema),
     defaultValues: {
-      info: data.info,
+      name: data.name,
       category: data.category,
       suppliers: data.suppliers,
       stock: data.stock,
@@ -84,11 +77,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
         <div className={css.wrap}>
           <div>
             <input
-              {...register("info")}
+              {...register("name")}
               className={css.input}
               placeholder="Product info"
             />
-            <p className={css.errormessage}>{errors.info?.message}</p>
+            <p className={css.errormessage}>{errors.name?.message}</p>
           </div>
 
           <div className={css.inputWrap}>

@@ -17,11 +17,11 @@ interface EditModalProps {
 }
 
 interface IForms {
-  info: string;
+  name: string;
   address: string;
-  company: string;
+  suppliers: string;
   date: string;
-  ammount: number;
+  amount: string;
   status: string;
 }
 
@@ -34,7 +34,10 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
   const [selectedStatus, setSelectedStatus] = useState(data.status);
   const [isOpenCalendar, setOpenCalendar] = useState(false);
 
-  const [value, onChange] = useState<Value>(new Date());
+  const dateString = data.date;
+  const date = new Date(dateString);
+
+  const [value, onChange] = useState<Value>(date);
 
   const myDate = value?.toString();
 
@@ -52,14 +55,13 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
   const schema = yup
     .object({
-      info: yup.string().required("Suppliers Info is required"),
+      name: yup.string().required("Suppliers Info is required"),
       address: yup.string().required("Address is required"),
-      company: yup.string().required("Company is required"),
+      suppliers: yup.string().required("Company is required"),
       date: yup.string().required("Date is required"),
-      ammount: yup
-        .number()
+      amount: yup
+        .string()
         .typeError("Ammount is required and must be a number")
-        .positive("Ammount must be a positive number")
         .required(),
       status: yup.string().required("Status is required"),
     })
@@ -74,11 +76,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
   } = useForm<IForms>({
     resolver: yupResolver(schema),
     defaultValues: {
-      info: data.info,
+      name: data.name,
       address: data.address,
-      company: data.company,
+      suppliers: data.suppliers,
       date: data.date,
-      ammount: data.ammount,
+      amount: data.amount,
       status: data.status,
     },
   });
@@ -106,11 +108,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
         <div className={css.wrap}>
           <div>
             <input
-              {...register("info")}
+              {...register("name")}
               className={css.input}
               placeholder="Suppliers Info"
             />
-            <p className={css.errormessage}>{errors.info?.message}</p>
+            <p className={css.errormessage}>{errors.name?.message}</p>
           </div>
 
           <div>
@@ -124,11 +126,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
           <div>
             <input
-              {...register("company")}
+              {...register("suppliers")}
               className={css.input}
               placeholder="Company"
             />
-            <p className={css.errormessage}>{errors.company?.message}</p>
+            <p className={css.errormessage}>{errors.suppliers?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
@@ -179,11 +181,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
           <div>
             <input
-              {...register("ammount")}
+              {...register("amount")}
               className={css.input}
-              placeholder="Ammount"
+              placeholder="Amount"
             />
-            <p className={css.errormessage}>{errors.ammount?.message}</p>
+            <p className={css.errormessage}>{errors.amount?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
