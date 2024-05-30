@@ -5,11 +5,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./IncomeExpenses.module.css";
+import { incomes } from "../../../data/Income-Expenses";
+import { useMemo } from "react";
 
 interface Person {
-  today: string;
-  col2: string;
-  col3: number;
+  type: string;
+  name: string;
+  amount: string;
 }
 
 const columns: ColumnDef<Person>[] = [
@@ -18,17 +20,17 @@ const columns: ColumnDef<Person>[] = [
     footer: (props) => props.column.id,
     columns: [
       {
-        accessorKey: "today",
+        accessorKey: "type",
         header: "Today",
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "col2",
+        accessorKey: "name",
         header: "",
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "col3",
+        accessorKey: "amount",
         header: "",
         footer: (props) => props.column.id,
       },
@@ -37,33 +39,7 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const IncomeExpenses = () => {
-  const data = [
-    {
-      today: "Expense",
-      col2: "Qonto billing",
-      col3: -49.88,
-    },
-    {
-      today: "Expense",
-      col2: "Qonto billing",
-      col3: -49.88,
-    },
-    {
-      today: "Expense",
-      col2: "Qonto billing",
-      col3: -49.88,
-    },
-    {
-      today: "Expense",
-      col2: "Qonto billing",
-      col3: -49.88,
-    },
-    {
-      today: "Expense",
-      col2: "Qonto billing",
-      col3: -49.88,
-    },
-  ];
+  const data = useMemo(() => incomes, []);
 
   const table = useReactTable({
     data,
@@ -75,6 +51,18 @@ const IncomeExpenses = () => {
     debugHeaders: true,
     debugColumns: true,
   });
+
+  const getClassByType = (type: string) => {
+    if (type === "Expense") return css.expense;
+    if (type === "Income") return css.income;
+    return css.error;
+  };
+
+  const getClassByAmount = (type: string) => {
+    if (type === "Expense") return css.col3Red;
+    if (type === "Income") return css.col3Green;
+    return css.col3Error;
+  };
 
   return (
     <table className={css.table}>
@@ -113,7 +101,17 @@ const IncomeExpenses = () => {
                     className={css.row}
                     style={{ width: cell.column.getSize() }}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {cell.column.id === "type" ? (
+                      <span className={getClassByType(row.original.type)}>
+                        {row.original.type}
+                      </span>
+                    ) : cell.column.id === "amount" ? (
+                      <span className={getClassByAmount(row.original.type)}>
+                        {row.original.amount}
+                      </span>
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </td>
                 );
               })}
