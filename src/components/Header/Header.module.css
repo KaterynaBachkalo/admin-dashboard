@@ -1,6 +1,6 @@
 .header {
-  min-width: 280px;
-  max-width: 375px;
+  position: fixed;
+  min-width: 375px;
   z-index: 100;
   background-color: rgb(247, 248, 250);
   border-bottom: 1px solid rgba(29, 30, 33, 0.1);
@@ -11,7 +11,13 @@
   align-items: center;
   justify-content: space-between;
 
-  margin: 0 auto;
+  /* margin: 0 auto; */
+}
+
+@media only screen and (max-width: 374px) {
+  .header {
+    min-width: 320px;
+  }
 }
 
 .navigation {
@@ -66,7 +72,7 @@
 @media only screen and (min-width: 768px) {
   .header {
     padding: 15px 32px;
-    max-width: 768px;
+    min-width: 768px;
   }
 
   .navigation {
@@ -76,7 +82,7 @@
 
 @media only screen and (min-width: 1440px) {
   .header {
-    max-width: 1440px;
+    min-width: 1440px;
     padding: 15px 40px 15px 20px;
   }
 

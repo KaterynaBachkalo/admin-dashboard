@@ -25,7 +25,7 @@
 
   background: rgb(231, 241, 237);
   padding: 14px;
-  width: 335px;
+  width: 315px;
 }
 
 .subheader {
@@ -102,18 +102,31 @@ tr th:last-child {
 }
 
 .col-name {
-  max-width: 106px;
+  max-width: 90px;
 }
 
 .col-email {
-  max-width: 151px;
+  max-width: 120px;
 }
 
-.col-spent {
+@media only screen and (min-width: 375px) {
+  .col-name {
+    max-width: 106px;
+  }
+
+  .col-email {
+    max-width: 151px;
+  }
+}
+
+/* .col-spent {
   min-width: 78px;
-}
+} */
 
-.row {
+.col-name,
+.col-email,
+.col-spent,
+.cellWrap {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

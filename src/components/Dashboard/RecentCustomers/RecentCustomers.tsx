@@ -30,7 +30,7 @@ const columns: ColumnDef<Person>[] = [
               alt={row.original.name}
               className={css.avatar}
             />
-            {row.original.name}
+            <p className={css.name}>{row.original.name}</p>
           </div>
         ),
         footer: (props) => props.column.id,
@@ -102,9 +102,11 @@ const RecentCustomersTable = () => {
           return (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
+                const cellValue = cell.getValue() as string;
                 return (
                   <td
                     key={cell.id}
+                    title={cellValue}
                     className={`${css.row} ${
                       cell.column.id === "name"
                         ? css["col-name"]
