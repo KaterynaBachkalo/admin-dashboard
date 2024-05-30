@@ -6,14 +6,15 @@ import {
 } from "@tanstack/react-table";
 import css from "./AllOrdersTable.module.css";
 import { useEffect, useMemo, useState } from "react";
+import { orders } from "../../data/orders";
 
 interface Person {
   name: string;
-  avatar: string;
+  photo: string;
   address: string;
-  products: number;
-  date: string;
-  price: number;
+  products: string;
+  order_date: string;
+  price: string;
   status: string;
 }
 
@@ -28,7 +29,7 @@ const columns: ColumnDef<Person>[] = [
         cell: ({ row }) => (
           <div className={css.cellWrap}>
             <img
-              src={row.original.avatar}
+              src={row.original.photo}
               alt={row.original.name}
               className={css.avatar}
             />
@@ -48,7 +49,7 @@ const columns: ColumnDef<Person>[] = [
         footer: (props) => props.column.id,
       },
       {
-        accessorKey: "date",
+        accessorKey: "order_date",
         header: "Order date",
         footer: (props) => props.column.id,
       },
@@ -67,56 +68,7 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
-  const data = useMemo(
-    () => [
-      {
-        name: "Alex Shatov",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-        address: "Mripur-1",
-        products: 12,
-        date: "July 31, 2023",
-        price: 890.66,
-        status: "Completed",
-      },
-      {
-        name: "Philip Harbach",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-        address: "Mripur-1",
-        products: 12,
-        date: "July 31, 2023",
-        price: 890.66,
-        status: "Completed",
-      },
-      {
-        name: "Mirko Fisuk",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-        address: "Mripur-1",
-        products: 12,
-        date: "July 31, 2023",
-        price: 890.66,
-        status: "Completed",
-      },
-      {
-        name: "Olga Semklo",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-        address: "Mripur-1",
-        products: 12,
-        date: "July 31, 2023",
-        price: 890.66,
-        status: "Completed",
-      },
-      {
-        name: "Burak Long",
-        avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-        address: "Mripur-1",
-        products: 12,
-        date: "July 31, 2023",
-        price: 890.66,
-        status: "Completed",
-      },
-    ],
-    []
-  );
+  const data = useMemo(() => orders, []);
 
   const [filteredData, setFilteredData] = useState(data);
 
@@ -137,6 +89,16 @@ const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
     debugHeaders: true,
     debugColumns: true,
   });
+
+  const getClassByStatus = (status: string) => {
+    if (status === "Completed") return css.greenStatus;
+    if (status === "Confirmed") return css.violetStatus;
+    if (status === "Pending") return css.orangeStatus;
+    if (status === "Processing") return css.blueStatus;
+    if (status === "Cancelled") return css.redStatus;
+    if (status === "Shipped") return css.roseStatus;
+    return css.darkgreenStatus;
+  };
 
   return (
     <>
@@ -184,9 +146,15 @@ const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
                       }`}
                       style={{ width: cell.column.getSize() }}
                     >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                      {cell.column.id === "status" ? (
+                        <span className={getClassByStatus(row.original.status)}>
+                          {row.original.status}
+                        </span>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )
                       )}
                     </td>
                   );
