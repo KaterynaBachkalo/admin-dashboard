@@ -10,13 +10,14 @@ import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal copy/DeleteModal";
+import { products } from "../../../data/products";
 
 export interface Products {
-  info: string;
+  name: string;
   category: string;
-  stock: number;
+  stock: string;
   suppliers: string;
-  price: number;
+  price: string;
 }
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
@@ -26,7 +27,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
       footer: (props) => props.column.id,
       columns: [
         {
-          accessorKey: "info",
+          accessorKey: "name",
           header: "Product Info",
           footer: (props) => props.column.id,
         },
@@ -75,46 +76,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(
-    () => [
-      {
-        info: "Moringa",
-        category: "Medicine",
-        stock: 12,
-        suppliers: "Square",
-        price: 89.66,
-      },
-      {
-        info: "Antibiotic 250 mg",
-        category: "Medicine",
-        stock: 12,
-        suppliers: "Square",
-        price: 89.66,
-      },
-      {
-        info: "Headache Relief",
-        category: "Medicine",
-        stock: 12,
-        suppliers: "Square",
-        price: 89.66,
-      },
-      {
-        info: "Pharmacy",
-        category: "Medicine",
-        stock: 12,
-        suppliers: "Square",
-        price: 89.66,
-      },
-      {
-        info: "Magnesium",
-        category: "Medicine",
-        stock: 12,
-        suppliers: "Square",
-        price: 89.66,
-      },
-    ],
-    []
-  );
+  const data = useMemo(() => products, []);
 
   const [filteredData, setFilteredData] = useState(data);
   const [editModalData, setEditModalData] = useState<Products | null>(null);
@@ -139,7 +101,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredData(
-      data.filter((item) => item.info.toLowerCase().includes(lowercasedQuery))
+      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery, data]);
 
@@ -190,7 +152,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
                     <td
                       key={cell.id}
                       className={`${css.row} ${
-                        cell.column.id === "info"
+                        cell.column.id === "name"
                           ? css["col-info"]
                           : cell.column.id === "category"
                           ? css["col-category"]
