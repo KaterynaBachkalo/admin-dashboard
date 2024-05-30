@@ -5,12 +5,14 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./RecentCustomers.module.css";
+import { customers } from "../../../data/customers";
+import { useMemo } from "react";
 
 interface Person {
   name: string;
   email: string;
-  spent: number;
-  avatar: string;
+  spent: string;
+  avatar: string | undefined;
 }
 
 const columns: ColumnDef<Person>[] = [
@@ -48,38 +50,16 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const RecentCustomersTable = () => {
-  const data = [
-    {
-      name: "Alex Shatov",
-      email: "alexshatov@gmail.com",
-      spent: 2890.66,
-      avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-    },
-    {
-      name: "Philip Harbach",
-      email: "philip.h@gmail.com",
-      spent: 2767.04,
-      avatar: "https://randomuser.me/api/portraits/men/2.jpg",
-    },
-    {
-      name: "Mirko Fisuk",
-      email: "mirkofisuk@gmail.com",
-      spent: 2996.0,
-      avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-    },
-    {
-      name: "Olga Semklo",
-      email: "olga.s@cool.design",
-      spent: 1220.66,
-      avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-    },
-    {
-      name: "Burak Long",
-      email: "longburak@gmail.com",
-      spent: 1890.66,
-      avatar: "https://randomuser.me/api/portraits/men/4.jpg",
-    },
-  ];
+  const myCustomers = customers.map((customer) => {
+    return {
+      avatar: customer.image || customer.photo,
+      name: customer.name,
+      email: customer.email,
+      spent: customer.spent,
+    };
+  });
+
+  const data = useMemo(() => myCustomers, [myCustomers]);
 
   const table = useReactTable({
     data,
