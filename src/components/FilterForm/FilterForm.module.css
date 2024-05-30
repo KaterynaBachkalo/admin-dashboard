@@ -2,6 +2,7 @@
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 .inputWrap {
@@ -20,7 +21,7 @@
   box-shadow: 0px -1px 5px 0px rgba(71, 71, 71, 0.05);
   border-radius: 60px;
   background: rgb(255, 255, 255);
-
+  min-width: 160px;
   width: 215px;
   height: 44px;
   padding: 13px 18px;

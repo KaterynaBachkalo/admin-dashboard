@@ -114,7 +114,7 @@ const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
                   key={header.id}
                   colSpan={header.colSpan}
                   className={index === 0 ? css.header : css.subheader}
-                  style={{ width: header.getSize() }}
+                  // style={{ width: header.getSize() }}
                 >
                   {header.isPlaceholder
                     ? null
