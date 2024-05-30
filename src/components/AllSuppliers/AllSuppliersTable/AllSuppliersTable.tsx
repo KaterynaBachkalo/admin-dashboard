@@ -9,13 +9,14 @@ import { useEffect, useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModaSupplier/EditModal";
+import { suppliers } from "../../../data/suppliers";
 
 export interface Suppliers {
-  info: string;
+  name: string;
   address: string;
-  company: string;
+  suppliers: string;
   date: string;
-  ammount: number;
+  amount: string;
   status: string;
 }
 
@@ -26,7 +27,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
       footer: (props) => props.column.id,
       columns: [
         {
-          accessorKey: "info",
+          accessorKey: "name",
           header: "Suppliers Info",
           footer: (props) => props.column.id,
         },
@@ -36,7 +37,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
           footer: (props) => props.column.id,
         },
         {
-          accessorKey: "company",
+          accessorKey: "suppliers",
           header: "Company",
           footer: (props) => props.column.id,
         },
@@ -46,8 +47,8 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
           footer: (props) => props.column.id,
         },
         {
-          accessorKey: "ammount",
-          header: "Ammount",
+          accessorKey: "amount",
+          header: "Amount",
           footer: (props) => props.column.id,
         },
         {
@@ -73,51 +74,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(
-    () => [
-      {
-        info: "Alex Shatov",
-        address: "Mripur-1",
-        company: "Square",
-        date: "August 1, 2023",
-        ammount: 6952.53,
-        status: "Active",
-      },
-      {
-        info: "Philip Harbach",
-        address: "Mripur-1",
-        company: "Square",
-        date: "August 1, 2023",
-        ammount: 6952.53,
-        status: "Active",
-      },
-      {
-        info: "Mirko Fisuk",
-        address: "Mripur-1",
-        company: "Square",
-        date: "August 1, 2023",
-        ammount: 6952.53,
-        status: "Active",
-      },
-      {
-        info: "Olga Semklo",
-        address: "Mripur-1",
-        company: "Square",
-        date: "August 1, 2023",
-        ammount: 6952.53,
-        status: "Active",
-      },
-      {
-        info: "Burak Long",
-        address: "Mripur-1",
-        company: "Square",
-        date: "August 1, 2023",
-        ammount: 6952.53,
-        status: "Active",
-      },
-    ],
-    []
-  );
+  const data = useMemo(() => suppliers, []);
 
   const [filteredData, setFilteredData] = useState(data);
   const [editModalData, setEditModalData] = useState<Suppliers | null>(null);
@@ -133,7 +90,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     setFilteredData(
-      data.filter((item) => item.info.toLowerCase().includes(lowercasedQuery))
+      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
     );
   }, [searchQuery, data]);
 
@@ -147,6 +104,11 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
     debugHeaders: true,
     debugColumns: true,
   });
+
+  const getClassByStatus = (status: string) => {
+    if (status === "Active") return css.greenStatus;
+    return css.redStatus;
+  };
 
   return (
     <>
@@ -194,9 +156,15 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
                       }`}
                       style={{ width: cell.column.getSize() }}
                     >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                      {cell.column.id === "status" ? (
+                        <span className={getClassByStatus(row.original.status)}>
+                          {row.original.status}
+                        </span>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )
                       )}
                     </td>
                   );

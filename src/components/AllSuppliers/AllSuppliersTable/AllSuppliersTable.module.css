@@ -185,3 +185,24 @@ tr th:last-child {
   align-items: center;
   cursor: pointer;
 }
+
+.greenStatus,
+.redStatus {
+  display: block;
+  width: 92px;
+  padding: 4px;
+
+  border-radius: 40px;
+  background: rgba(232, 80, 80, 0.1);
+
+  color: rgb(232, 80, 80);
+  font-size: 14px;
+
+  letter-spacing: -5%;
+  text-align: center;
+}
+
+.greenStatus {
+  background: rgba(89, 177, 122, 0.1);
+  color: rgb(89, 177, 122);
+}
