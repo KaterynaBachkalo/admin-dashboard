@@ -1,4 +1,4 @@
-[
+export const orders = [
   {
     "photo": "https://i.imgur.com/1As0akH.png1",
     "name": "Taras Shevchenko",

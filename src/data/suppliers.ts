@@ -1,4 +1,4 @@
-[
+export const suppliers = [
   {
     "name": "Alex Shatov",
     "address": "Mripur-1",

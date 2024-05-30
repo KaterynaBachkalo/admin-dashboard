@@ -1,4 +1,4 @@
-[
+export const products = [
   {
     "id": "0",
     "photo": "https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg",
