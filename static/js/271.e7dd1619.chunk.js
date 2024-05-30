@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[271],{271:(a,s,e)=>{e.r(s),e.d(s,{default:()=>n});e(43);const t="CustomersDataPage_container__aHqXc";var c=e(579);const n=()=>(0,c.jsx)("section",{className:t,children:"CustomersDataPage"})}}]);
-//# sourceMappingURL=271.e7dd1619.chunk.js.map
