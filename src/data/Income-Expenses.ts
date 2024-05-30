@@ -1,4 +1,4 @@
-[
+export const incomes = [
   {
     "name": "Qonto billing",
     "amount": "-49.88",
