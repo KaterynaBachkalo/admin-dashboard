@@ -21,7 +21,7 @@
   .tables {
     display: flex;
     gap: 20px;
-    align-items: baseline;
+    align-items: stretch;
     height: 512px;
   }
 }
