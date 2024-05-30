@@ -85,7 +85,6 @@ const RecentCustomersTable = () => {
                 key={header.id}
                 colSpan={header.colSpan}
                 className={index === 0 ? css.header : css.subheader}
-                style={{ width: header.getSize() }}
               >
                 {header.isPlaceholder
                   ? null
@@ -111,6 +110,8 @@ const RecentCustomersTable = () => {
                         ? css["col-name"]
                         : cell.column.id === "email"
                         ? css["col-email"]
+                        : cell.column.id === "spent"
+                        ? css["col-spent"]
                         : ""
                     }`}
                     style={{ width: cell.column.getSize() }}

@@ -1,7 +1,7 @@
 .table {
   margin-bottom: 68px;
   border-collapse: separate; /* Используем separate для корректной работы border-radius */
-  width: 100%;
+  table-layout: fixed;
   border-spacing: 0;
   border-radius: 8px;
   overflow: hidden; /* Обрезаем внутреннее содержимое по радиусам */
@@ -25,6 +25,7 @@
 
   background: rgb(231, 241, 237);
   padding: 14px;
+  width: 335px;
 }
 
 .subheader {
@@ -39,7 +40,7 @@
 }
 
 .row {
-  padding: 14px 8px 14px 14px;
+  padding: 10px;
 
   color: rgb(29, 30, 33);
   font-size: 12px;
@@ -71,6 +72,7 @@
 
   .header {
     font-size: 18px;
+    width: 704px;
   }
 
   .row {
@@ -100,11 +102,22 @@ tr th:last-child {
 }
 
 .col-name {
-  min-width: 106px;
+  max-width: 106px;
 }
 
 .col-email {
-  min-width: 151px;
+  max-width: 151px;
+}
+
+.col-spent {
+  min-width: 78px;
+}
+
+.row {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
 }
 
 @media only screen and (min-width: 768px) {
