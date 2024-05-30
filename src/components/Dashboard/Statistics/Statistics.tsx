@@ -1,4 +1,3 @@
-import React from "react";
 import Icon from "../../Icon";
 import css from "./Statistics.module.css";
 import { products } from "../../../data/products";
