@@ -63,7 +63,7 @@
   align-items: center;
 }
 
-.buttonAdd {
+.buttonSave {
   display: block;
   width: 100%;
   border-radius: 60px;
@@ -104,8 +104,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .input,
-  .button {
+  .input {
     width: calc((536px - 80px - 8px) / 2);
   }
 
@@ -113,6 +112,12 @@
     flex-direction: row;
     flex-wrap: wrap;
     gap: 14px 8px;
+  }
+
+  .buttonSave,
+  .buttonCancel {
+    width: 133px;
+    height: 44px;
   }
 }
 
@@ -153,14 +158,5 @@ input[type="number"]::-webkit-outer-spin-button {
 .label,
 .navigationButton {
   font-family: Inter;
-
   padding: 3px;
-}
-
-.navigationButton {
-  min-width: 20px;
-}
-
-.days {
-  padding: 0;
 }

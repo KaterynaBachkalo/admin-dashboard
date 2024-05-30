@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Icon from "../Icon";
 import Dropdown from "../DropdownStatus/Dropdown";
 import { Suppliers } from "../AllSuppliers/AllSuppliersTable/AllSuppliersTable";
+import useCloseDropdown from "../../services/closeDropdown";
 import css from "./EditModal.module.css";
 
 interface EditModalProps {
@@ -47,6 +48,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
   const iconref = useRef<HTMLDivElement | null>(null);
   const iconDateref = useRef<HTMLDivElement | null>(null);
+  const calendarRef = useRef<HTMLDivElement | null>(null);
 
   const schema = yup
     .object({
@@ -56,8 +58,9 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       date: yup.string().required("Date is required"),
       ammount: yup
         .number()
+        .typeError("Ammount is required and must be a number")
         .positive("Ammount must be a positive number")
-        .required("Ammount is required"),
+        .required(),
       status: yup.string().required("Status is required"),
     })
     .required();
@@ -94,6 +97,8 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
   useEffect(() => {
     setValue("status", selectedStatus);
   }, [selectedStatus, setValue]);
+
+  useCloseDropdown(setOpenCalendar, calendarRef, iconDateref);
 
   return (
     <>
@@ -139,7 +144,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
                 />
               )}
             />
-            <p className={css.errormessage}>{errors.status?.message}</p>
+            <p className={css.errormessage}>{errors.date?.message}</p>
 
             <div
               className={css.iconCalendar}
@@ -149,21 +154,24 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
               <Icon name="calendar" width={16} height={16} />
             </div>
             {isOpenCalendar && (
-              <div>
+              <div ref={calendarRef}>
                 <Calendar
                   onChange={(date) => {
                     onChange(date);
-                    console.log("date", date);
                     setOpenCalendar(false);
                   }}
                   value={value}
                   locale="en-US"
-                  ref={iconDateref}
                   className={css.calendar}
                   tileClassName={css.tile}
                   navigationLabel={({ label }) => (
                     <span className={css.label}>{label}</span>
                   )}
+                  formatShortWeekday={(locale, date) =>
+                    date
+                      .toLocaleDateString(locale, { weekday: "short" })
+                      .substring(0, 2)
+                  }
                 />
               </div>
             )}
@@ -209,30 +217,11 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
               />
             )}
           </div>
-
-          {/* <div>
-            <Controller
-              name="price"
-              control={control}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  className={css.input}
-                  placeholder="Price"
-                  onChange={(e) => {
-                    const value = e.target.value.replace(",", ".");
-                    field.onChange(value);
-                  }}
-                />
-              )}
-            />
-            <p className={css.errormessage}>{errors.price?.message}</p>
-          </div> */}
         </div>
 
         <div className={css.buttonWrap}>
-          <button type="submit" className={css.buttonAdd}>
-            Add
+          <button type="submit" className={css.buttonSave}>
+            Save
           </button>
 
           <button type="button" className={css.buttonCancel} onClick={onClose}>
