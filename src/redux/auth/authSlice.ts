@@ -1,14 +1,10 @@
 import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import {
-  registerThunk,
-  logInThunk,
-  logOutThunk,
-  refreshUserThunk,
-} from "./operations";
+import { logInThunk, logOutThunk, refreshUserThunk } from "./operations";
 import { toast } from "react-toastify";
 
 export interface IState {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
   user: {
     email: string | null;
     name: string | null;
@@ -27,7 +23,7 @@ const handleRejected = (state: IState, action: PayloadAction<any | null>) => {
   state.isLoading = false;
   state.error = action.payload;
 
-  if (state.error === 400) {
+  if (state.error === 401) {
     toast.error("The email or password are incorrect", {
       position: "top-center",
       autoClose: 2000,
@@ -42,7 +38,8 @@ const handleRejected = (state: IState, action: PayloadAction<any | null>) => {
 };
 
 const handleFulfilled = (state: IState, action: PayloadAction<any>) => {
-  state.token = action.payload.token;
+  state.accessToken = action.payload.accessToken;
+  state.refreshToken = action.payload.refreshToken;
   state.user = action.payload.user;
   state.isLoading = false;
   state.authenticated = true;
@@ -50,12 +47,13 @@ const handleFulfilled = (state: IState, action: PayloadAction<any>) => {
 };
 
 const INITIAL_STATE: IState = {
-  token: "",
+  accessToken: "",
+  refreshToken: "",
   user: {
     email: null,
     name: null,
   },
-  authenticated: true,
+  authenticated: false,
   isLoading: false,
   error: null,
 };
@@ -66,13 +64,17 @@ const authSlice = createSlice({
 
   reducers: {
     resetToken(state: IState, action) {
-      return (state = { ...state, token: "", authenticated: false });
+      return (state = {
+        ...state,
+        accessToken: "",
+        refreshToken: "",
+        authenticated: false,
+      });
     },
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(registerThunk.fulfilled, handleFulfilled)
 
       .addCase(logInThunk.fulfilled, handleFulfilled)
 
@@ -81,11 +83,13 @@ const authSlice = createSlice({
         state.authenticated = true;
         state.user = action.payload;
         state.error = null;
-        if (state.token === null) return;
+        if (state.accessToken === null) return;
+        if (state.refreshToken === null) return;
       })
 
       .addCase(logOutThunk.fulfilled, (state: IState) => {
-        state.token = "";
+        state.accessToken = "";
+        state.refreshToken = "";
         state.user = { email: null, name: null };
         state.isLoading = false;
         state.authenticated = false;
@@ -95,8 +99,7 @@ const authSlice = createSlice({
         isAnyOf(
           logOutThunk.pending,
           logInThunk.pending,
-          refreshUserThunk.pending,
-          registerThunk.pending
+          refreshUserThunk.pending
         ),
         handlePending
       )
@@ -104,8 +107,7 @@ const authSlice = createSlice({
         isAnyOf(
           logOutThunk.rejected,
           logInThunk.rejected,
-          refreshUserThunk.rejected,
-          registerThunk.rejected
+          refreshUserThunk.rejected
         ),
         handleRejected
       );

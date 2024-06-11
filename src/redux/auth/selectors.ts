@@ -3,7 +3,15 @@ import { IState } from "./authSlice";
 
 const selectAuth = (state: { auth: IState }) => state.auth;
 
-export const selectAuthToken = createSelector(selectAuth, (auth) => auth.token);
+export const selectAuthAccessToken = createSelector(
+  selectAuth,
+  (auth) => auth.accessToken
+);
+
+export const selectAuthRefreshToken = createSelector(
+  selectAuth,
+  (auth) => auth.refreshToken
+);
 
 export const selectCurrentUser = createSelector(
   selectAuth,
@@ -19,3 +27,5 @@ export const selectAuthIsLoading = createSelector(
   selectAuth,
   (auth) => auth.isLoading
 );
+
+export const selectAuthError = createSelector(selectAuth, (auth) => auth.error);
