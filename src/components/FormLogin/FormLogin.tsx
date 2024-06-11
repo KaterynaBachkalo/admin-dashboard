@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import css from "./FormLogin.module.css";
 import Icon from "../Icon";
-
-interface IForms {
-  email: string;
-  password: string;
-}
+import { useDispatch } from "react-redux";
+import { logInThunk } from "../../redux/auth/operations";
+import { AppDispatch } from "../../redux/store";
+import { IForms } from "../Types/types";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const schema = yup
     .object({
       email: yup.string().email().required(),
-      password: yup.string().required(),
+      password: yup.string().required().min(6),
     })
     .required();
 
@@ -29,7 +30,9 @@ const FormLogin = () => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data: IForms) => console.log(data);
+  const onSubmit = (data: IForms) => {
+    dispatch(logInThunk(data));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { useDispatch } from "react-redux";
 import { refreshUserThunk } from "./redux/auth/operations";
+import { AppDispatch } from "./redux/store";
 
 const AllProductsPage = lazy(
   () => import("./pages/AllProductsPage/AllProductsPage")
@@ -21,10 +22,10 @@ const CustomersDataPage = lazy(
 );
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(refreshUserThunk() as any);
+    dispatch(refreshUserThunk());
   }, [dispatch]);
 
   return (
