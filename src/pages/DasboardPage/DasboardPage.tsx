@@ -1,4 +1,3 @@
-import React from "react";
 import css from "./DasboardPage.module.css";
 import Statistics from "../../components/Dashboard/Statistics/Statistics";
 import RecentCustomers from "../../components/Dashboard/RecentCustomers/RecentCustomers";
