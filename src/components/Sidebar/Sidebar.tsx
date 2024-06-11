@@ -2,6 +2,9 @@ import { FC } from "react";
 import Icon from "../Icon";
 import css from "./Sidebar.module.css";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { logOutThunk } from "../../redux/auth/operations";
 
 interface IProps {
   onClose: () => void;
@@ -9,7 +12,11 @@ interface IProps {
 }
 
 const Sidebar: FC<IProps> = ({ onClose, isOpen }) => {
-  const handleLogOut = () => {};
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleLogOut = () => {
+    dispatch(logOutThunk());
+  };
 
   return (
     <div className={`${css.sidebar} ${isOpen ? "" : css.hideBackdrop}`}>
