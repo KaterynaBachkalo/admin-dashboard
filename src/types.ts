@@ -1,18 +1,44 @@
-export interface INanny {
-  about: string;
-  avatar_url: string;
-  birthday: string;
-  education: string;
-  experience: string;
-  kids_age: string;
-  location: string;
+export interface ICustomers {
+  photo: string;
   name: string;
-  price_per_hour: number;
-  rating: number;
-  characters: string[];
-  reviews: {
-    comment: string;
-    rating: number;
-    reviewer: string;
-  }[];
+  email: string;
+  spent: string;
+  phone: string;
+  address: string;
+  register_date: string;
+}
+
+export interface IProducts {
+  id: string;
+  photo: string;
+  name: string;
+  suppliers: string;
+  stock: string;
+  price: string;
+  category: string;
+}
+
+export interface ISuppliers {
+  name: string;
+  suppliers: string;
+  address: string;
+  date: string;
+  amount: string;
+  status: string;
+}
+
+export interface IIncomeExpenses {
+  name: string;
+  amount: string;
+  type: string;
+}
+
+export interface IOrders {
+  photo: string;
+  name: string;
+  address: string;
+  products: string;
+  price: string;
+  status: string;
+  order_date: string;
 }
