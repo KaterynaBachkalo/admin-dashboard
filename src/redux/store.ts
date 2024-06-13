@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import { nanniesReducer } from "./nanniesSlice";
-// import { filterReducer } from "./filterSlice";
+import { adminReducer } from "./admin/adminSlice";
+import { filterReducer } from "./filterSlice";
 
 import {
   persistStore,
@@ -23,7 +23,8 @@ const authConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer),
-  // water: waterReducer,
+  admin: adminReducer,
+  filter: filterReducer,
 });
 
 export const store = configureStore({
