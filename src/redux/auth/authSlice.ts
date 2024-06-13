@@ -75,7 +75,6 @@ const authSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-
       .addCase(logInThunk.fulfilled, handleFulfilled)
 
       .addCase(refreshUserThunk.fulfilled, (state: IState, action) => {
