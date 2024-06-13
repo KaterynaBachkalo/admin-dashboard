@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/admin-dashboard/static/css/main.799eb55c.css",
-    "main.js": "/admin-dashboard/static/js/main.2caa8144.js",
+    "main.js": "/admin-dashboard/static/js/main.fb764102.js",
     "static/css/747.ddf4dd2a.chunk.css": "/admin-dashboard/static/css/747.ddf4dd2a.chunk.css",
     "static/js/747.e124a233.chunk.js": "/admin-dashboard/static/js/747.e124a233.chunk.js",
     "static/css/811.4ae82571.chunk.css": "/admin-dashboard/static/css/811.4ae82571.chunk.css",
-    "static/js/811.fc76c5d7.chunk.js": "/admin-dashboard/static/js/811.fc76c5d7.chunk.js",
+    "static/js/811.b88b7dd4.chunk.js": "/admin-dashboard/static/js/811.b88b7dd4.chunk.js",
     "static/css/348.59b0c279.chunk.css": "/admin-dashboard/static/css/348.59b0c279.chunk.css",
     "static/js/348.0d7d46f2.chunk.js": "/admin-dashboard/static/js/348.0d7d46f2.chunk.js",
     "static/css/948.277679c8.chunk.css": "/admin-dashboard/static/css/948.277679c8.chunk.css",
@@ -22,11 +22,11 @@
     "static/media/sprite.svg": "/admin-dashboard/static/media/sprite.df6eb436aa4e0c421e033cf2b0496ae1.svg",
     "index.html": "/admin-dashboard/index.html",
     "main.799eb55c.css.map": "/admin-dashboard/static/css/main.799eb55c.css.map",
-    "main.2caa8144.js.map": "/admin-dashboard/static/js/main.2caa8144.js.map",
+    "main.fb764102.js.map": "/admin-dashboard/static/js/main.fb764102.js.map",
     "747.ddf4dd2a.chunk.css.map": "/admin-dashboard/static/css/747.ddf4dd2a.chunk.css.map",
     "747.e124a233.chunk.js.map": "/admin-dashboard/static/js/747.e124a233.chunk.js.map",
     "811.4ae82571.chunk.css.map": "/admin-dashboard/static/css/811.4ae82571.chunk.css.map",
-    "811.fc76c5d7.chunk.js.map": "/admin-dashboard/static/js/811.fc76c5d7.chunk.js.map",
+    "811.b88b7dd4.chunk.js.map": "/admin-dashboard/static/js/811.b88b7dd4.chunk.js.map",
     "348.59b0c279.chunk.css.map": "/admin-dashboard/static/css/348.59b0c279.chunk.css.map",
     "348.0d7d46f2.chunk.js.map": "/admin-dashboard/static/js/348.0d7d46f2.chunk.js.map",
     "948.277679c8.chunk.css.map": "/admin-dashboard/static/css/948.277679c8.chunk.css.map",
@@ -39,6 +39,6 @@
   },
   "entrypoints": [
     "static/css/main.799eb55c.css",
-    "static/js/main.2caa8144.js"
+    "static/js/main.fb764102.js"
   ]
 }
