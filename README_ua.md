@@ -1,4 +1,4 @@
-**Read in English: [](README.md).**<br />
+**Read in English: [Admin dashboard](README.md).**<br />
 
 # Додаток ""
 
