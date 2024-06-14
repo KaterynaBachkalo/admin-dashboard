@@ -1,5 +1,6 @@
 export interface ICustomers {
-  photo: string;
+  photo?: string;
+  image?: string;
   name: string;
   email: string;
   spent: string;
