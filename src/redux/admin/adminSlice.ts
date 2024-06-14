@@ -1,5 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { fetchData } from "./operation";
+import {
+  fetchCustomers,
+  fetchData,
+  fetchOrders,
+  fetchProducts,
+  fetchSuppliers,
+} from "./operation";
 import {
   ICustomers,
   IIncomeExpenses,
@@ -14,9 +20,25 @@ export interface IState {
   customers: ICustomers[];
   incomeExpenses: IIncomeExpenses[];
   orders: IOrders[];
+  totalCustomers: number;
+  totalProducts: number;
+  totalSuppliers: number;
+  totalOrders: number;
   isLoading: boolean;
   error: any | null;
   currentPage: number;
+}
+
+interface Payload {
+  products: IProducts[];
+  suppliers: ISuppliers[];
+  customers: ICustomers[];
+  incomeExpenses: IIncomeExpenses[];
+  orders: IOrders[];
+  totalCustomers: number;
+  totalProducts: number;
+  totalSuppliers: number;
+  total: number;
 }
 
 export const handlePending = (state: IState): void => {
@@ -38,6 +60,10 @@ const INITIAL_STATE = {
   customers: [],
   incomeExpenses: [],
   orders: [],
+  totalCustomers: 0,
+  totalProducts: 0,
+  totalSuppliers: 0,
+  totalOrders: 0,
   isLoading: false,
   error: null,
   currentPage: 1,
@@ -54,6 +80,9 @@ const adminSlice = createSlice({
       state.customers = [];
       state.incomeExpenses = [];
       state.orders = [];
+      state.totalCustomers = 0;
+      state.totalProducts = 0;
+      state.totalSuppliers = 0;
     },
     setCurrentPage(state: IState, action: PayloadAction<number>) {
       state.currentPage = action.payload;
@@ -68,18 +97,67 @@ const adminSlice = createSlice({
       .addCase(fetchData.pending, handlePending)
       .addCase(
         fetchData.fulfilled,
-        (state: IState, action: PayloadAction<[]>) => {
-          state.products = action.payload;
-          state.suppliers = action.payload;
-          state.orders = action.payload;
-          state.customers = action.payload;
-          state.incomeExpenses = action.payload;
-
+        (state: IState, action: PayloadAction<Payload>) => {
+          state.products = action.payload.products;
+          state.suppliers = action.payload.suppliers;
+          state.customers = action.payload.customers;
+          state.incomeExpenses = action.payload.incomeExpenses;
+          state.totalCustomers = action.payload.totalCustomers;
+          state.totalProducts = action.payload.totalProducts;
+          state.totalSuppliers = action.payload.totalSuppliers;
           state.isLoading = false;
           state.error = null;
         }
       )
-      .addCase(fetchData.rejected, handleRejected);
+      .addCase(fetchData.rejected, handleRejected)
+
+      .addCase(fetchOrders.pending, handlePending)
+      .addCase(
+        fetchOrders.fulfilled,
+        (state: IState, action: PayloadAction<Payload>) => {
+          state.orders = action.payload.orders;
+          state.totalOrders = action.payload.total;
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(fetchOrders.rejected, handleRejected)
+
+      .addCase(fetchProducts.pending, handlePending)
+      .addCase(
+        fetchProducts.fulfilled,
+        (state: IState, action: PayloadAction<Payload>) => {
+          state.products = action.payload.products;
+          state.totalProducts = action.payload.total;
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(fetchProducts.rejected, handleRejected)
+
+      .addCase(fetchCustomers.pending, handlePending)
+      .addCase(
+        fetchCustomers.fulfilled,
+        (state: IState, action: PayloadAction<Payload>) => {
+          state.customers = action.payload.customers;
+          state.totalCustomers = action.payload.total;
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(fetchCustomers.rejected, handleRejected)
+
+      .addCase(fetchSuppliers.pending, handlePending)
+      .addCase(
+        fetchSuppliers.fulfilled,
+        (state: IState, action: PayloadAction<Payload>) => {
+          state.suppliers = action.payload.suppliers;
+          state.totalSuppliers = action.payload.total;
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(fetchSuppliers.rejected, handleRejected);
 
     // .addCase(addContact.pending, handlePending)
     // .addCase(addContact.fulfilled, (state, action) => {
@@ -101,17 +179,7 @@ const adminSlice = createSlice({
   },
 });
 
-// export const {
-//   addToFavorites,
-//   deleteFavorites,
-//   clearState,
-//   setCurrentPage,
-//   setNannies,
-//   setLoading,
-//   setError,
-//   setNextPage,
-//   clearFavorites,
-// } = adminSlice.actions;
+export const { clearState, setCurrentPage, setNextPage } = adminSlice.actions;
 
 // Редюсер слайсу
 export const adminReducer = adminSlice.reducer;

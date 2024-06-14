@@ -24,3 +24,15 @@ export const selectFilter = (state: IFilter) => state.filter;
 
 export const selectCurrentPage = (state: { admin: IState }) =>
   state.admin.currentPage;
+
+export const selectTotalCustomers = (state: { admin: IState }) =>
+  state.admin.totalCustomers;
+
+export const selectTotalProducts = (state: { admin: IState }) =>
+  state.admin.totalProducts;
+
+export const selectTotalSuppliers = (state: { admin: IState }) =>
+  state.admin.totalSuppliers;
+
+export const selectTotalOrders = (state: { admin: IState }) =>
+  state.admin.totalOrders;
