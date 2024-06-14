@@ -10,7 +10,16 @@ import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal copy/DeleteModal";
-import { products } from "../../../data/products";
+import RenderPaginationDots from "../../Pagination/RenderPaginationDots";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentPage,
+  selectProducts,
+  selectTotalProducts,
+} from "../../../redux/admin/selectors";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../redux/store";
+import { setCurrentPage } from "../../../redux/admin/adminSlice";
 
 export interface Products {
   name: string;
@@ -21,6 +30,17 @@ export interface Products {
 }
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
+  const dispatch = useDispatch() as AppDispatch;
+
+  const products = useSelector(selectProducts);
+
+  const currentPage = useSelector(selectCurrentPage);
+  const totalProducts = useSelector(selectTotalProducts);
+
+  const handlePageChange = (newPage: number) => {
+    dispatch(setCurrentPage(newPage));
+  };
+
   const columns: ColumnDef<Products>[] = [
     {
       header: "All products",
@@ -76,7 +96,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(() => products, []);
+  const data = useMemo(() => products, [products]);
 
   const [filteredData, setFilteredData] = useState(data);
   const [editModalData, setEditModalData] = useState<Products | null>(null);
@@ -111,9 +131,9 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    debugTable: false,
+    debugHeaders: false,
+    debugColumns: false,
   });
 
   return (
@@ -174,6 +194,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
           })}
         </tbody>
       </table>
+
       {filteredData.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
@@ -190,6 +211,12 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
           <DeleteModal onClose={closeDeleteModal} data={deleteModalData} />
         </Modal>
       )}
+
+      <RenderPaginationDots
+        currentPage={currentPage}
+        total={totalProducts}
+        handlePageChange={handlePageChange}
+      />
     </>
   );
 };

@@ -1,10 +1,12 @@
 .table {
   margin-bottom: 20px;
-  border-collapse: separate; /* Используем separate для корректной работы border-radius */
+  border-collapse: separate;
+  /* Используем separate для корректной работы border-radius */
   width: 671px;
   border-spacing: 0;
   border-radius: 8px;
-  overflow: hidden; /* Обрезаем внутреннее содержимое по радиусам */
+  overflow: hidden;
+  /* Обрезаем внутреннее содержимое по радиусам */
   border: 1px solid rgba(29, 30, 33, 0.08);
   text-align: left;
 }

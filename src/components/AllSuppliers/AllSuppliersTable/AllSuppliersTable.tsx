@@ -9,7 +9,16 @@ import { useEffect, useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModaSupplier/EditModal";
-import { suppliers } from "../../../data/suppliers";
+import RenderPaginationDots from "../../Pagination/RenderPaginationDots";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import {
+  selectCurrentPage,
+  selectSuppliers,
+  selectTotalSuppliers,
+} from "../../../redux/admin/selectors";
+import { setCurrentPage } from "../../../redux/admin/adminSlice";
+import { AppDispatch } from "../../../redux/store";
 
 export interface Suppliers {
   name: string;
@@ -21,6 +30,18 @@ export interface Suppliers {
 }
 
 const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
+  const dispatch = useDispatch() as AppDispatch;
+
+  const suppliers = useSelector(selectSuppliers);
+
+  const currentPage = useSelector(selectCurrentPage);
+
+  const totalSuppliers = useSelector(selectTotalSuppliers);
+
+  const handlePageChange = (newPage: number) => {
+    dispatch(setCurrentPage(newPage));
+  };
+
   const columns: ColumnDef<Suppliers>[] = [
     {
       header: "All suppliers",
@@ -74,7 +95,7 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(() => suppliers, []);
+  const data = useMemo(() => suppliers, [suppliers]);
 
   const [filteredData, setFilteredData] = useState(data);
   const [editModalData, setEditModalData] = useState<Suppliers | null>(null);
@@ -174,6 +195,11 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
           })}
         </tbody>
       </table>
+      <RenderPaginationDots
+        currentPage={currentPage}
+        total={totalSuppliers}
+        handlePageChange={handlePageChange}
+      />
       {filteredData.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
