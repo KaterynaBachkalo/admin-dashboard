@@ -5,8 +5,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./RecentCustomers.module.css";
-import { customers } from "../../../data/customers";
+
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { selectCustomers } from "../../../redux/admin/selectors";
 
 interface Person {
   name: string;
@@ -50,14 +52,18 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const RecentCustomersTable = () => {
-  const myCustomers = customers.map((customer) => {
-    return {
-      avatar: customer.image || customer.photo,
-      name: customer.name,
-      email: customer.email,
-      spent: customer.spent,
-    };
-  });
+  const customers = useSelector(selectCustomers);
+
+  const myCustomers = customers
+    .map((customer) => {
+      return {
+        avatar: customer.image || customer.photo,
+        name: customer.name,
+        email: customer.email,
+        spent: customer.spent,
+      };
+    })
+    .slice(-5);
 
   const data = useMemo(() => myCustomers, [myCustomers]);
 
@@ -67,9 +73,9 @@ const RecentCustomersTable = () => {
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    debugTable: false,
+    debugHeaders: false,
+    debugColumns: false,
   });
 
   return (

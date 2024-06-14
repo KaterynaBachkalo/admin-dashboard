@@ -1,6 +1,6 @@
 .header {
   position: fixed;
-  min-width: 375px;
+  width: 100%;
   z-index: 100;
   background-color: rgb(247, 248, 250);
   border-bottom: 1px solid rgba(29, 30, 33, 0.1);
@@ -32,6 +32,7 @@
   gap: 20px;
   align-items: center;
 }
+
 .wrapText {
   display: flex;
   flex-direction: column;

@@ -5,8 +5,10 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./IncomeExpenses.module.css";
-import { incomes } from "../../../data/Income-Expenses";
+
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { selectIncomeExpenses } from "../../../redux/admin/selectors";
 
 interface Person {
   type: string;
@@ -39,7 +41,9 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const IncomeExpenses = () => {
-  const data = useMemo(() => incomes, []);
+  const incomes = useSelector(selectIncomeExpenses);
+
+  const data = useMemo(() => incomes.slice(-6), [incomes]);
 
   const table = useReactTable({
     data,
@@ -47,9 +51,9 @@ const IncomeExpenses = () => {
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    debugTable: false,
+    debugHeaders: false,
+    debugColumns: false,
   });
 
   const getClassByType = (type: string) => {

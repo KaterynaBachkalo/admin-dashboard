@@ -5,15 +5,15 @@ import Icon from "../Icon";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { logOutThunk } from "../../redux/auth/operations";
-// import { useSelector } from "react-redux";
-// import { selectCurrentUser } from "../../redux/auth/selectors";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../redux/auth/selectors";
 
 interface IProps {
   onOpen: (value: boolean) => void;
 }
 
 const Header: FC<IProps> = ({ onOpen }) => {
-  // const currentUser = useSelector(selectCurrentUser);
+  const currentUser = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
 
@@ -46,8 +46,8 @@ const Header: FC<IProps> = ({ onOpen }) => {
               {formattedPathname}
             </Link>
             <span className={css.stroke}></span>
-            <p className={css.email}>vendor@gmail.com</p>
-            {/* <p className={css.email}>{currentUser.email}</p> */}
+            {/* <p className={css.email}>vendor@gmail.com</p> */}
+            <p className={css.email}>{currentUser.email}</p>
           </div>
         </div>
       </nav>

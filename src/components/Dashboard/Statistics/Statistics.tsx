@@ -1,10 +1,17 @@
+import { useSelector } from "react-redux";
 import Icon from "../../Icon";
 import css from "./Statistics.module.css";
-import { products } from "../../../data/products";
-import { suppliers } from "../../../data/suppliers";
-import { customers } from "../../../data/customers";
+import {
+  selectTotalProducts,
+  selectTotalSuppliers,
+  selectTotalCustomers,
+} from "../../../redux/admin/selectors";
 
 const Statistics = () => {
+  const totalProducts = useSelector(selectTotalProducts);
+  const totalSuppliers = useSelector(selectTotalSuppliers);
+  const totalCustomers = useSelector(selectTotalCustomers);
+
   return (
     <div className={css.cells}>
       <div className={css.border}>
@@ -12,7 +19,7 @@ const Statistics = () => {
           <Icon name="coins" />
           <p className={css.text}>All products</p>
         </div>
-        <p className={css.number}>{products.length}</p>
+        <p className={css.number}>{totalProducts}</p>
       </div>
 
       <div className={css.border}>
@@ -20,7 +27,7 @@ const Statistics = () => {
           <Icon name="customers" />
           <p className={css.text}>All suppliers</p>
         </div>
-        <p className={css.number}>{suppliers.length}</p>
+        <p className={css.number}>{totalSuppliers}</p>
       </div>
 
       <div className={css.border}>
@@ -28,7 +35,7 @@ const Statistics = () => {
           <Icon name="customers" />
           <p className={css.text}>All customers</p>
         </div>
-        <p className={css.number}>{customers.length}</p>
+        <p className={css.number}>{totalCustomers}</p>
       </div>
     </div>
   );
