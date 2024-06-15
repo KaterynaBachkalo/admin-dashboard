@@ -121,9 +121,9 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    debugTable: false,
+    debugHeaders: false,
+    debugColumns: false,
   });
 
   const getClassByStatus = (status: string) => {
