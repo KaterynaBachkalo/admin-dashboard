@@ -1,6 +1,14 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { selectIsAuthenticated } from "../redux/auth/selectors";
+import {
+  selectAuthAccessToken,
+  selectAuthIsLoading,
+  selectIsAuthenticated,
+} from "../redux/auth/selectors";
+import { useEffect } from "react";
+import { refreshUserThunk } from "../redux/auth/operations";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
 
 interface IProps {
   component: any;
@@ -9,9 +17,21 @@ interface IProps {
 
 const PrivateRoute: React.FC<IProps> = ({
   component: Component,
-  redirectTo = "/",
+  redirectTo = "/login",
 }) => {
   const authenticated = useSelector(selectIsAuthenticated);
+
+  const isLoading = useSelector(selectAuthIsLoading);
+
+  const token = useSelector(selectAuthAccessToken);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (!isLoading && !authenticated) dispatch(refreshUserThunk());
+  }, [dispatch, isLoading, authenticated]);
+
+  if (!isLoading && !authenticated && token) return null;
 
   return authenticated ? Component : <Navigate to={redirectTo} replace />;
 };

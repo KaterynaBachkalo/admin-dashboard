@@ -9,7 +9,7 @@ interface IProps {
 
 const RestrictedRoute: React.FC<IProps> = ({
   component: Component,
-  redirectTo = "/login",
+  redirectTo = "/",
 }) => {
   const authenticated = useSelector(selectIsAuthenticated);
 
