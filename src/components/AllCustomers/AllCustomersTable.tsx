@@ -83,18 +83,20 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const myCustomers = customers.map((customer) => {
-    return {
-      avatar: customer.image || customer.photo,
-      name: customer.name,
-      email: customer.email,
-      address: customer.address,
-      phone: customer.phone,
-      date: customer.register_date,
-    };
-  });
-
-  const data = useMemo(() => myCustomers, [myCustomers]);
+  const data = useMemo(
+    () =>
+      customers.map((customer) => {
+        return {
+          avatar: customer.image || customer.photo,
+          name: customer.name,
+          email: customer.email,
+          address: customer.address,
+          phone: customer.phone,
+          date: customer.register_date,
+        };
+      }),
+    [customers]
+  );
 
   const [filteredData, setFilteredData] = useState(data);
 
