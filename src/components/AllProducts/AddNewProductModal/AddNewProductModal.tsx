@@ -5,31 +5,52 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Dropdown from "../../Dropdown/Dropdown";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../../redux/admin/operation";
+import { AppDispatch } from "../../../redux/store";
+import { useSelector } from "react-redux";
+import { selectError } from "../../../redux/admin/selectors";
+import { toast } from "react-toastify";
 
 interface AddModalProps {
   onClose: () => void;
 }
 
 interface IForms {
-  productInfo: string;
+  name: string;
+  category: string;
+  suppliers: string;
+  stock: number;
+  price: number;
+}
+
+interface IFormsToBD {
+  name: string;
   category: string;
   suppliers: string;
   stock: string;
-  price: number;
+  price: string;
 }
 
 const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
 
+  const isError = useSelector(selectError);
+  console.log(isError);
   const iconref = useRef<HTMLDivElement | null>(null);
+
+  const dispatch = useDispatch() as AppDispatch;
 
   const schema = yup
     .object({
-      productInfo: yup.string().required("Product info is required"),
+      name: yup.string().required("Product info is required"),
       category: yup.string().required("Category is required"),
       suppliers: yup.string().required("Suppliers is required"),
-      stock: yup.string().required("Stock is required"),
+      stock: yup
+        .number()
+        .typeError("Stock is required and must be a number")
+        .required(),
       price: yup
         .number()
         .typeError("Price is required and must be a number")
@@ -40,7 +61,6 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const {
     register,
     handleSubmit,
-    reset,
     control,
     setValue,
     formState: { errors },
@@ -48,9 +68,21 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    setValue("category", selectedFilter);
+  }, [selectedFilter, setValue]);
+
   const onSubmit = (data: IForms) => {
-    console.log(data);
-    reset();
+    const newProduct: IFormsToBD = {
+      name: data.name,
+      category: data.category,
+      suppliers: data.suppliers,
+      stock: data.stock.toString(),
+      price: data.price.toString(),
+    };
+
+    dispatch(addProduct(newProduct));
+    onClose();
   };
 
   const handleSelect = (selected: string) => {
@@ -58,21 +90,17 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
     setOpenDropdown(false);
   };
 
-  useEffect(() => {
-    setValue("category", selectedFilter);
-  }, [selectedFilter, setValue]);
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={css.wrap}>
           <div>
             <input
-              {...register("productInfo")}
+              {...register("name")}
               className={css.input}
               placeholder="Product info"
             />
-            <p className={css.errormessage}>{errors.productInfo?.message}</p>
+            <p className={css.errormessage}>{errors.name?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
@@ -88,7 +116,9 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
                 />
               )}
             />
-            <p className={css.errormessage}>{errors.category?.message}</p>
+            {!selectedFilter && (
+              <p className={css.errormessage}>{errors.category?.message}</p>
+            )}
 
             <div
               className={css.iconChevron}
@@ -120,6 +150,7 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
               {...register("stock")}
               className={css.input}
               placeholder="Stock"
+              type="number"
             />
             <p className={css.errormessage}>{errors.stock?.message}</p>
           </div>
