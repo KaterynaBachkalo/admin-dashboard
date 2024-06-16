@@ -31,7 +31,10 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       name: yup.string().required("Product info is required"),
       category: yup.string().required("Category is required"),
       suppliers: yup.string().required("Suppliers is required"),
-      stock: yup.string().required("Stock is required"),
+      stock: yup
+        .string()
+        .typeError("Stock is required and must be a number")
+        .required(),
       price: yup
         .string()
         .typeError("Price is required and must be a number")
@@ -126,10 +129,25 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
           </div>
 
           <div>
-            <input
+            {/* <input
               {...register("stock")}
               className={css.input}
               placeholder="Stock"
+            /> */}
+            <Controller
+              name="stock"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Stock"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(",", ".");
+                    field.onChange(value);
+                  }}
+                />
+              )}
             />
             <p className={css.errormessage}>{errors.stock?.message}</p>
           </div>
@@ -150,6 +168,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
                 />
               )}
             />
+
             <p className={css.errormessage}>{errors.price?.message}</p>
           </div>
         </div>

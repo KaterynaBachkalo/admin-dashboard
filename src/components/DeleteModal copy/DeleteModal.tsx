@@ -1,6 +1,9 @@
 import { FC } from "react";
 import css from "./DeleteModal.module.css";
 import { Products } from "../AllProducts/AllProductsTable/AllProductsTable";
+import { useDispatch } from "react-redux";
+import { deleteProduct } from "../../redux/admin/operation";
+import { string } from "yup";
 
 interface DeleteModalProps {
   data: Products;
@@ -8,8 +11,19 @@ interface DeleteModalProps {
 }
 
 const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
-  const handleDelete = () => {
+  const dispatch = useDispatch();
+
+  const handleDelete = (productId: string) => {
+    dispatch(deleteProduct(productId));
     onClose();
+  };
+
+  const handleDeleteClick = () => {
+    if (data.id) {
+      handleDelete(data.id);
+    } else {
+      console.error("Product id is undefined or null.");
+    }
   };
 
   return (
@@ -19,7 +33,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
         <button
           type="submit"
           className={css.buttonDelete}
-          onClick={handleDelete}
+          onClick={handleDeleteClick}
         >
           Delete
         </button>
