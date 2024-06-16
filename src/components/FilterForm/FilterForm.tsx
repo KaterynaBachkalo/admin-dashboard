@@ -16,6 +16,7 @@ interface IProps {
 
 const FilterForm: FC<IProps> = ({ setSearchQuery, placeholder }) => {
   const { register, handleSubmit } = useForm<IForms>();
+
   const onSubmit = (data: IForms) => {
     setSearchQuery(data.name);
   };
