@@ -7,6 +7,14 @@ interface FetchOrdersParams {
   name?: string;
 }
 
+interface IFormsProducts {
+  name: string;
+  category: string;
+  suppliers: string;
+  stock: string;
+  price: string;
+}
+
 export const fetchData = createAsyncThunk(
   "/admin/dashboard/fetchData",
   async (_, thunkAPI) => {
@@ -26,7 +34,6 @@ export const fetchOrders = createAsyncThunk(
       const response = await adminInstance.get("/admin/orders", {
         params: { page, limit, name },
       });
-
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -79,31 +86,30 @@ export const fetchSuppliers = createAsyncThunk(
   }
 );
 
-// export const addContact = createAsyncThunk(
-//   "contacts/addContact",
-//   async ({ name, number }, thunkAPI) => {
-//     try {
-//       const response = await adminInstance.post("/contacts", {
-//         name,
-//         number,
-//       });
+export const addProduct = createAsyncThunk(
+  "products/addProduct",
+  async (newProduct: IFormsProducts, thunkAPI) => {
+    try {
+      const response = await adminInstance.post("/admin/products", newProduct);
 
-//       return response.data;
-//     } catch (error: any) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-// export const deleteContact = createAsyncThunk(
-//   "contacts/deleteContact",
-//   async (contactId, thunkAPI) => {
-//     try {
-//       const response = await adminInstance.delete(`/contacts/${contactId}`);
+export const deleteProduct = createAsyncThunk(
+  "products/deleteProduct",
+  async (productId: string, thunkAPI) => {
+    try {
+      const response = await adminInstance.delete(
+        `/admin/products/${productId}`
+      );
 
-//       return response.data;
-//     } catch (error: any) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

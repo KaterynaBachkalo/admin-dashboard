@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
+  addProduct,
+  deleteProduct,
   fetchCustomers,
   fetchData,
   fetchOrders,
@@ -13,6 +15,7 @@ import {
   IProducts,
   ISuppliers,
 } from "../../types";
+import { toast } from "react-toastify";
 
 export interface IState {
   products: IProducts[];
@@ -87,9 +90,6 @@ const adminSlice = createSlice({
     setCurrentPage(state: IState, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
-    setNextPage(state: IState) {
-      state.currentPage = state.currentPage + 1;
-    },
   },
 
   extraReducers: (builder) => {
@@ -157,29 +157,46 @@ const adminSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(fetchSuppliers.rejected, handleRejected);
+      .addCase(fetchSuppliers.rejected, handleRejected)
 
-    // .addCase(addContact.pending, handlePending)
-    // .addCase(addContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.items.push(action.payload);
-    //   state.error = null;
-    // })
-    // .addCase(addContact.rejected, handleRejected)
+      .addCase(addProduct.pending, handlePending)
+      .addCase(
+        addProduct.fulfilled,
+        (state: IState, action: PayloadAction<IProducts>) => {
+          state.isLoading = false;
+          state.products.push(action.payload);
+          state.error = null;
+          toast.success("New product was successfully added");
+        }
+      )
+      .addCase(
+        addProduct.rejected,
+        (state: IState, action: PayloadAction<any>): void => {
+          state.isLoading = false;
+          state.error = action.payload;
 
-    // .addCase(deleteContact.pending, handlePending)
-    // .addCase(deleteContact.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.items = state.items.filter(
-    //     (contact) => contact.id !== action.payload.id
-    //   );
-    //   state.error = null;
-    // })
-    // .addCase(deleteContact.rejected, handleRejected);
+          if (state.error === "Request failed with status code 409") {
+            toast.error("The product exists with this name");
+          }
+        }
+      )
+
+      .addCase(deleteProduct.pending, handlePending)
+      .addCase(
+        deleteProduct.fulfilled,
+        (state: IState, action: PayloadAction<IProducts>) => {
+          state.isLoading = false;
+          state.products = state.products.filter(
+            (product) => product.id !== action.payload.id
+          );
+          state.error = null;
+        }
+      )
+      .addCase(deleteProduct.rejected, handleRejected);
   },
 });
 
-export const { clearState, setCurrentPage, setNextPage } = adminSlice.actions;
+export const { clearState, setCurrentPage } = adminSlice.actions;
 
 // Редюсер слайсу
 export const adminReducer = adminSlice.reducer;
