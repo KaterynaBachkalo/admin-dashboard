@@ -5,17 +5,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllCustomersTable.module.css";
-import { useEffect, useMemo, useState } from "react";
-import RenderPaginationDots from "../Pagination/RenderPaginationDots";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentPage,
-  selectCustomers,
-  selectTotalCustomers,
-} from "../../redux/admin/selectors";
-import { setCurrentPage } from "../../redux/admin/adminSlice";
+import { selectCustomers } from "../../redux/admin/selectors";
 
 export interface Person {
   avatar: string | undefined;
@@ -27,17 +19,7 @@ export interface Person {
 }
 
 const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
-  const dispatch = useDispatch() as AppDispatch;
-
   const customers = useSelector(selectCustomers);
-
-  const currentPage = useSelector(selectCurrentPage);
-
-  const totalCustomers = useSelector(selectTotalCustomers);
-
-  const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
-  };
 
   const columns: ColumnDef<Person>[] = [
     {
@@ -98,24 +80,12 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
     [customers]
   );
 
-  const [filteredData, setFilteredData] = useState(data);
-
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    setFilteredData(
-      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
-    );
-  }, [searchQuery, data]);
-
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: false,
-    debugHeaders: false,
-    debugColumns: false,
   });
 
   return (
@@ -181,13 +151,7 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
         </tbody>
       </table>
 
-      <RenderPaginationDots
-        currentPage={currentPage}
-        total={totalCustomers}
-        handlePageChange={handlePageChange}
-      />
-
-      {filteredData.length === 0 && (
+      {data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>

@@ -5,17 +5,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllOrdersTable.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentPage,
-  selectOrders,
-  selectTotalOrders,
-} from "../../redux/admin/selectors";
-import { setCurrentPage } from "../../redux/admin/adminSlice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../redux/store";
-import RenderPaginationDots from "../Pagination/RenderPaginationDots";
+import { selectOrders } from "../../redux/admin/selectors";
 
 interface Person {
   name: string;
@@ -77,38 +69,16 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
-  const dispatch = useDispatch() as AppDispatch;
-
   const orders = useSelector(selectOrders);
-
-  const currentPage = useSelector(selectCurrentPage);
-
-  const totalOrders = useSelector(selectTotalOrders);
-
-  const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
-  };
 
   const data = useMemo(() => orders, [orders]);
 
-  const [filteredData, setFilteredData] = useState(data);
-
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    setFilteredData(
-      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
-    );
-  }, [searchQuery, data]);
-
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: false,
-    debugHeaders: false,
-    debugColumns: false,
   });
 
   const getClassByStatus = (status: string) => {
@@ -184,17 +154,11 @@ const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
           })}
         </tbody>
       </table>
-      {filteredData.length === 0 && (
+      {data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>
       )}
-
-      <RenderPaginationDots
-        currentPage={currentPage}
-        total={totalOrders}
-        handlePageChange={handlePageChange}
-      />
     </>
   );
 };

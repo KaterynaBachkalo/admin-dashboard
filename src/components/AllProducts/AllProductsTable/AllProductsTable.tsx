@@ -5,23 +5,16 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllProductsTable.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal copy/DeleteModal";
-import RenderPaginationDots from "../../Pagination/RenderPaginationDots";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentPage,
-  selectProducts,
-  selectTotalProducts,
-} from "../../../redux/admin/selectors";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux/store";
-import { setCurrentPage } from "../../../redux/admin/adminSlice";
+import { selectProducts } from "../../../redux/admin/selectors";
 
 export interface Products {
+  id?: string;
   name: string;
   category: string;
   stock: string;
@@ -30,16 +23,7 @@ export interface Products {
 }
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
-  const dispatch = useDispatch() as AppDispatch;
-
   const products = useSelector(selectProducts);
-
-  const currentPage = useSelector(selectCurrentPage);
-  const totalProducts = useSelector(selectTotalProducts);
-
-  const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
-  };
 
   const columns: ColumnDef<Products>[] = [
     {
@@ -98,7 +82,6 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
 
   const data = useMemo(() => products, [products]);
 
-  const [filteredData, setFilteredData] = useState(data);
   const [editModalData, setEditModalData] = useState<Products | null>(null);
   const [deleteModalData, setDeleteModalData] = useState<Products | null>(null);
 
@@ -107,6 +90,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
   };
 
   const openDeleteModal = (rowData: Products) => {
+    console.log(rowData);
     setDeleteModalData(rowData);
   };
 
@@ -118,22 +102,12 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     setDeleteModalData(null);
   };
 
-  useEffect(() => {
-    const lowercasedQuery = searchQuery.toLowerCase();
-    setFilteredData(
-      data.filter((item) => item.name.toLowerCase().includes(lowercasedQuery))
-    );
-  }, [searchQuery, data]);
-
   const table = useReactTable({
-    data: filteredData,
+    data,
     columns,
     enableColumnResizing: true,
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
-    debugTable: false,
-    debugHeaders: false,
-    debugColumns: false,
   });
 
   return (
@@ -195,7 +169,7 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
         </tbody>
       </table>
 
-      {filteredData.length === 0 && (
+      {data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>
@@ -211,12 +185,6 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
           <DeleteModal onClose={closeDeleteModal} data={deleteModalData} />
         </Modal>
       )}
-
-      <RenderPaginationDots
-        currentPage={currentPage}
-        total={totalProducts}
-        handlePageChange={handlePageChange}
-      />
     </>
   );
 };
