@@ -8,9 +8,6 @@ import Dropdown from "../../Dropdown/Dropdown";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../../redux/admin/operation";
 import { AppDispatch } from "../../../redux/store";
-import { useSelector } from "react-redux";
-import { selectError } from "../../../redux/admin/selectors";
-import { toast } from "react-toastify";
 
 interface AddModalProps {
   onClose: () => void;
@@ -36,11 +33,9 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
 
-  const isError = useSelector(selectError);
-  console.log(isError);
   const iconref = useRef<HTMLDivElement | null>(null);
 
-  const dispatch = useDispatch() as AppDispatch;
+  const dispatch = useDispatch<AppDispatch>();
 
   const schema = yup
     .object({

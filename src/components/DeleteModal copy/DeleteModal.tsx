@@ -1,31 +1,14 @@
 import { FC } from "react";
 import css from "./DeleteModal.module.css";
-import { Products } from "../AllProducts/AllProductsTable/AllProductsTable";
-import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../redux/admin/operation";
-import { string } from "yup";
+import { IProducts } from "../../types";
 
 interface DeleteModalProps {
-  data: Products;
+  data: IProducts;
   onClose: () => void;
+  handleDelete: () => void;
 }
 
-const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
-  const dispatch = useDispatch();
-
-  const handleDelete = (productId: string) => {
-    dispatch(deleteProduct(productId));
-    onClose();
-  };
-
-  const handleDeleteClick = () => {
-    if (data.id) {
-      handleDelete(data.id);
-    } else {
-      console.error("Product id is undefined or null.");
-    }
-  };
-
+const DeleteModal: FC<DeleteModalProps> = ({ data, onClose, handleDelete }) => {
   return (
     <>
       <p className={css.text}>Are you sure you want to delete {data.name}?</p>
@@ -33,7 +16,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
         <button
           type="submit"
           className={css.buttonDelete}
-          onClick={handleDeleteClick}
+          onClick={handleDelete}
         >
           Delete
         </button>

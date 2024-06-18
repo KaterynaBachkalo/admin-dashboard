@@ -42,7 +42,7 @@ export const fetchOrders = createAsyncThunk(
 );
 
 export const fetchProducts = createAsyncThunk(
-  "/admin/orders/fetchProducts",
+  "/admin/products/fetchProducts",
   async ({ page, limit, name }: FetchOrdersParams, thunkAPI) => {
     try {
       const response = await adminInstance.get("/admin/products", {
@@ -72,7 +72,7 @@ export const fetchCustomers = createAsyncThunk(
 );
 
 export const fetchSuppliers = createAsyncThunk(
-  "/admin/orders/fetchSuppliers",
+  "/admin/suppliers/fetchSuppliers",
   async ({ page, limit, name }: FetchOrdersParams, thunkAPI) => {
     try {
       const response = await adminInstance.get("/admin/suppliers", {
@@ -106,7 +106,6 @@ export const deleteProduct = createAsyncThunk(
       const response = await adminInstance.delete(
         `/admin/products/${productId}`
       );
-
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);

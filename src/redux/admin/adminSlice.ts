@@ -187,7 +187,7 @@ const adminSlice = createSlice({
         (state: IState, action: PayloadAction<IProducts>) => {
           state.isLoading = false;
           state.products = state.products.filter(
-            (product) => product.id !== action.payload.id
+            (product) => product._id !== action.payload.id
           );
           state.error = null;
         }

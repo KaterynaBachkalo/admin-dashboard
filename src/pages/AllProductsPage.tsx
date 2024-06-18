@@ -16,7 +16,7 @@ import { setCurrentPage } from "../redux/admin/adminSlice";
 
 const AllProductsPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const dispatch = useDispatch() as AppDispatch;
+  const dispatch = useDispatch<AppDispatch>();
   const currentPage = useSelector(selectCurrentPage);
 
   const totalProducts = useSelector(selectTotalProducts);

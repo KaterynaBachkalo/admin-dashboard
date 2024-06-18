@@ -5,27 +5,25 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllProductsTable.module.css";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal copy/DeleteModal";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/admin/selectors";
-
-export interface Products {
-  id?: string;
-  name: string;
-  category: string;
-  stock: string;
-  suppliers: string;
-  price: string;
-}
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../redux/store";
+import { deleteProduct, fetchProducts } from "../../../redux/admin/operation";
+import { IProducts } from "../../../types";
+import { toast } from "react-toastify";
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
   const products = useSelector(selectProducts);
 
-  const columns: ColumnDef<Products>[] = [
+  const dispatch = useDispatch<AppDispatch>();
+
+  const columns: ColumnDef<IProducts>[] = [
     {
       header: "All products",
       footer: (props) => props.column.id,
@@ -82,15 +80,16 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
 
   const data = useMemo(() => products, [products]);
 
-  const [editModalData, setEditModalData] = useState<Products | null>(null);
-  const [deleteModalData, setDeleteModalData] = useState<Products | null>(null);
+  const [editModalData, setEditModalData] = useState<IProducts | null>(null);
+  const [deleteModalData, setDeleteModalData] = useState<IProducts | null>(
+    null
+  );
 
-  const openEditModal = (rowData: Products) => {
+  const openEditModal = (rowData: IProducts) => {
     setEditModalData(rowData);
   };
 
-  const openDeleteModal = (rowData: Products) => {
-    console.log(rowData);
+  const openDeleteModal = (rowData: IProducts) => {
     setDeleteModalData(rowData);
   };
 
@@ -109,6 +108,12 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleDelete = (_id: string) => {
+    dispatch(deleteProduct(_id));
+    toast.success("The product is successfully deleted");
+    closeDeleteModal();
+  };
 
   return (
     <>
@@ -182,7 +187,11 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
       )}
       {deleteModalData && (
         <Modal onClose={closeDeleteModal} title="Delete Product">
-          <DeleteModal onClose={closeDeleteModal} data={deleteModalData} />
+          <DeleteModal
+            onClose={closeDeleteModal}
+            data={deleteModalData}
+            handleDelete={() => handleDelete(deleteModalData._id)}
+          />
         </Modal>
       )}
     </>
