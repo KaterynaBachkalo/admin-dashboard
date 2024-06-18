@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllProductsTable.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/admin/selectors";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
-import { deleteProduct, fetchProducts } from "../../../redux/admin/operation";
+import { deleteProduct } from "../../../redux/admin/operation";
 import { IProducts } from "../../../types";
 import { toast } from "react-toastify";
 
