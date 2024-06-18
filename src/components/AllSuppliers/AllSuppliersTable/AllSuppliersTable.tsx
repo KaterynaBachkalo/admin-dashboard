@@ -5,7 +5,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import css from "./AllSuppliersTable.module.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModaSupplier/EditModal";

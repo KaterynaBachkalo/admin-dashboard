@@ -7,7 +7,7 @@ import Icon from "../Icon";
 import { useDispatch } from "react-redux";
 import { logInThunk } from "../../redux/auth/operations";
 import { AppDispatch } from "../../redux/store";
-import { IForms } from "../Types/types";
+import { IForms } from "../../types";
 
 const FormLogin = () => {
   const [showPassword, setShowPassword] = useState(false);

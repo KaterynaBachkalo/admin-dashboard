@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef, useState } from "react";
 import css from "./EditModal.module.css";
-import { Products } from "../AllProducts/AllProductsTable/AllProductsTable";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Icon from "../Icon";
 import Dropdown from "../Dropdown/Dropdown";
+import { IProducts } from "../../types";
 
 interface EditModalProps {
-  data: Products;
+  data: IProducts;
   onClose: () => void;
 }
 
