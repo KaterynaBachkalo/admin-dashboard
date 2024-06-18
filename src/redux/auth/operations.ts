@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { IForms } from "../../components/Types/types";
+import { IForms } from "../../types";
 
 export const adminInstance = axios.create({
   baseURL: "http://localhost:3000/api",
