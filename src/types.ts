@@ -10,6 +10,7 @@ export interface ICustomers {
 }
 
 export interface IProducts {
+  _id: string;
   id: string;
   photo: string;
   name: string;
@@ -42,4 +43,9 @@ export interface IOrders {
   price: string;
   status: string;
   order_date: string;
+}
+
+export interface IForms {
+  email: string;
+  password: string;
 }
