@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   addProduct,
   deleteProduct,
+  editProduct,
   fetchCustomers,
   fetchData,
   fetchOrders,
@@ -184,15 +185,31 @@ const adminSlice = createSlice({
       .addCase(deleteProduct.pending, handlePending)
       .addCase(
         deleteProduct.fulfilled,
-        (state: IState, action: PayloadAction<IProducts>) => {
+        (state: IState, action: PayloadAction<{ productId: string }>) => {
           state.isLoading = false;
           state.products = state.products.filter(
-            (product) => product._id !== action.payload.id
+            (product) => product._id !== action.payload.productId
           );
           state.error = null;
         }
       )
-      .addCase(deleteProduct.rejected, handleRejected);
+      .addCase(deleteProduct.rejected, handleRejected)
+
+      .addCase(editProduct.pending, handlePending)
+      .addCase(
+        editProduct.fulfilled,
+        (state: IState, action: PayloadAction<IProducts>) => {
+          state.isLoading = false;
+          const index = state.products.findIndex(
+            (product) => product._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.products[index] = action.payload;
+          }
+          state.error = null;
+        }
+      )
+      .addCase(editProduct.rejected, handleRejected);
   },
 });
 

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { selectIsAuthenticated } from "../redux/auth/selectors";
+import { selectIsLoading } from "../redux/admin/selectors";
 
 interface IProps {
   component: any;
@@ -12,6 +13,10 @@ const RestrictedRoute: React.FC<IProps> = ({
   redirectTo = "/",
 }) => {
   const authenticated = useSelector(selectIsAuthenticated);
+
+  const isloading = useSelector(selectIsLoading);
+
+  if (isloading) return null;
 
   return authenticated ? <Navigate to={redirectTo} replace /> : Component;
 };

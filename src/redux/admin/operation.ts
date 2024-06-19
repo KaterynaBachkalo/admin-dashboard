@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { adminInstance } from "../auth/operations";
+import { IProducts } from "../../types";
 
 interface FetchOrdersParams {
   page: number;
@@ -103,9 +104,23 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (productId: string, thunkAPI) => {
     try {
-      const response = await adminInstance.delete(
-        `/admin/products/${productId}`
+      await adminInstance.delete(`/admin/products/${productId}`);
+      return { productId };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editProduct = createAsyncThunk(
+  "products/editProduct",
+  async (updatedProduct: IProducts, thunkAPI) => {
+    try {
+      const response = await adminInstance.put(
+        `/admin/products/${updatedProduct._id}`,
+        updatedProduct
       );
+      console.log(response.data);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
