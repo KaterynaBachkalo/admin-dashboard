@@ -6,6 +6,10 @@ import * as yup from "yup";
 import Icon from "../Icon";
 import Dropdown from "../Dropdown/Dropdown";
 import { IProducts } from "../../types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { editProduct } from "../../redux/admin/operation";
+import { toast } from "react-toastify";
 
 interface EditModalProps {
   data: IProducts;
@@ -16,8 +20,8 @@ interface IForms {
   name: string;
   category: string;
   suppliers: string;
-  stock: string;
-  price: string;
+  stock: number;
+  price: number;
 }
 
 const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
@@ -26,17 +30,19 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
   const iconref = useRef<HTMLDivElement | null>(null);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const schema = yup
     .object({
       name: yup.string().required("Product info is required"),
       category: yup.string().required("Category is required"),
       suppliers: yup.string().required("Suppliers is required"),
       stock: yup
-        .string()
+        .number()
         .typeError("Stock is required and must be a number")
         .required(),
       price: yup
-        .string()
+        .number()
         .typeError("Price is required and must be a number")
         .required(),
     })
@@ -54,14 +60,24 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       name: data.name,
       category: data.category,
       suppliers: data.suppliers,
-      stock: data.stock,
-      price: data.price,
+      stock: Number(data.stock),
+      price: Number(data.price),
     },
   });
 
-  const onSubmit = (data: IForms) => {
-    console.log(data);
+  const onSubmit = (formData: IForms) => {
+    const updatedProduct: IProducts = {
+      ...data,
+      name: formData.name,
+      category: formData.category,
+      suppliers: formData.suppliers,
+      stock: formData.stock.toString(),
+      price: formData.price.toString(),
+    };
+    const { _id, ...updateData } = updatedProduct;
 
+    dispatch(editProduct({ _id: data._id, ...updateData }));
+    toast.success("The product was successfully updated");
     onClose();
   };
 
@@ -129,11 +145,6 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
           </div>
 
           <div>
-            {/* <input
-              {...register("stock")}
-              className={css.input}
-              placeholder="Stock"
-            /> */}
             <Controller
               name="stock"
               control={control}
@@ -142,6 +153,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
                   {...field}
                   className={css.input}
                   placeholder="Stock"
+                  type="number"
                   onChange={(e) => {
                     const value = e.target.value.replace(",", ".");
                     field.onChange(value);
@@ -161,6 +173,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
                   {...field}
                   className={css.input}
                   placeholder="Price"
+                  type="number"
                   onChange={(e) => {
                     const value = e.target.value.replace(",", ".");
                     field.onChange(value);
