@@ -11,20 +11,12 @@ import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModaSupplier/EditModal";
 import { useSelector } from "react-redux";
 import { selectSuppliers } from "../../../redux/admin/selectors";
-
-export interface Suppliers {
-  name: string;
-  address: string;
-  suppliers: string;
-  date: string;
-  amount: string;
-  status: string;
-}
+import { ISuppliers } from "../../../types";
 
 const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
   const suppliers = useSelector(selectSuppliers);
 
-  const columns: ColumnDef<Suppliers>[] = [
+  const columns: ColumnDef<ISuppliers>[] = [
     {
       header: "All suppliers",
       footer: (props) => props.column.id,
@@ -79,9 +71,9 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
 
   const data = useMemo(() => suppliers, [suppliers]);
 
-  const [editModalData, setEditModalData] = useState<Suppliers | null>(null);
+  const [editModalData, setEditModalData] = useState<ISuppliers | null>(null);
 
-  const openEditModal = (rowData: Suppliers) => {
+  const openEditModal = (rowData: ISuppliers) => {
     setEditModalData(rowData);
   };
 

@@ -8,17 +8,21 @@ import * as yup from "yup";
 import Dropdown from "../../DropdownStatus/Dropdown";
 import useCloseDropdown from "../../../services/closeDropdown";
 import css from "./AddNewSupplierModal.module.css";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../redux/store";
+import { addSupplier } from "../../../redux/admin/operation";
+import { ISuppliersToBD } from "../../../types";
 
 interface AddModalProps {
   onClose: () => void;
 }
 
 interface IForms {
-  info: string;
+  name: string;
   address: string;
-  company: string;
+  suppliers: string;
   date: string;
-  ammount: number;
+  amount: number;
   status: string;
 }
 
@@ -32,6 +36,8 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
   const [isOpenCalendar, setOpenCalendar] = useState(false);
 
   const [value, onChange] = useState<Value>(null);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const myDate = value?.toString();
   const dateArray = myDate?.split(" ").slice(1, 4);
@@ -47,11 +53,11 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
 
   const schema = yup
     .object({
-      info: yup.string().required("Suppliers Info is required"),
+      name: yup.string().required("Suppliers Info is required"),
       address: yup.string().required("Address is required"),
-      company: yup.string().required("Company is required"),
+      suppliers: yup.string().required("Company is required"),
       date: yup.string().required("Date is required"),
-      ammount: yup
+      amount: yup
         .number()
         .typeError("Ammount is required and must be a number")
         .required(),
@@ -70,8 +76,16 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
   });
 
   const onSubmit = (data: IForms) => {
-    console.log(data);
-
+    const newSupplier: ISuppliersToBD = {
+      name: data.name,
+      address: data.address,
+      suppliers: data.suppliers,
+      date: data.date,
+      amount: `৳ ${data.amount.toString()}`,
+      status: data.status,
+    };
+    console.log(newSupplier);
+    dispatch(addSupplier(newSupplier));
     onClose();
   };
 
@@ -93,11 +107,11 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
         <div className={css.wrap}>
           <div>
             <input
-              {...register("info")}
+              {...register("name")}
               className={css.input}
               placeholder="Suppliers Info"
             />
-            <p className={css.errormessage}>{errors.info?.message}</p>
+            <p className={css.errormessage}>{errors.name?.message}</p>
           </div>
 
           <div>
@@ -111,11 +125,11 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
 
           <div>
             <input
-              {...register("company")}
+              {...register("suppliers")}
               className={css.input}
               placeholder="Company"
             />
-            <p className={css.errormessage}>{errors.company?.message}</p>
+            <p className={css.errormessage}>{errors.suppliers?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
@@ -145,10 +159,9 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
                 <Calendar
                   onChange={(date) => {
                     onChange(date);
-
                     setOpenCalendar(false);
                   }}
-                  value={value}
+                  value={selectedDate}
                   locale="en-US"
                   className={css.calendar}
                   tileClassName={css.tile}
@@ -166,12 +179,24 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <input
-              {...register("ammount")}
-              className={css.input}
-              placeholder="Ammount"
+            <Controller
+              name="amount"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Amount"
+                  type="number"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(",", ".");
+                    field.onChange(value);
+                  }}
+                />
+              )}
             />
-            <p className={css.errormessage}>{errors.ammount?.message}</p>
+
+            <p className={css.errormessage}>{errors.amount?.message}</p>
           </div>
 
           <div className={css.inputWrap}>
