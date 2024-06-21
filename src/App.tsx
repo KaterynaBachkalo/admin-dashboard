@@ -21,7 +21,10 @@ function App() {
   if (isLoading) {
     return <Loader />;
   }
-
+  // const dispatch = useDispatch<AppDispatch>();
+  // useEffect(() => {
+  //   dispatch(refreshUserThunk());
+  // }, [dispatch]);
   return (
     <>
       <Routes>
