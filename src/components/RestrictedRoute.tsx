@@ -16,6 +16,14 @@ const RestrictedRoute: React.FC<IProps> = ({
 
   const isloading = useSelector(selectIsLoading);
 
+  // const token = useSelector(selectAuthAccessToken);
+
+  // const dispatch = useDispatch<AppDispatch>();
+
+  // useEffect(() => {
+  //   if (!authenticated && token) dispatch(refreshUserThunk());
+  // }, [authenticated, token, dispatch]);
+
   if (isloading) return null;
 
   return authenticated ? <Navigate to={redirectTo} replace /> : Component;
