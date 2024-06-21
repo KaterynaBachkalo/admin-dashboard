@@ -9,7 +9,7 @@ import { useMemo, useState } from "react";
 import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
-import DeleteModal from "../../DeleteModal copy/DeleteModal";
+import DeleteModal from "../../DeleteModal/DeleteModal";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/admin/selectors";
 import { useDispatch } from "react-redux";

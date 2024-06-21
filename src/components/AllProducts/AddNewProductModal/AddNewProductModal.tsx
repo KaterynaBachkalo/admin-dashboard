@@ -8,6 +8,7 @@ import Dropdown from "../../Dropdown/Dropdown";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../../redux/admin/operation";
 import { AppDispatch } from "../../../redux/store";
+import { IProductsToBD } from "../../../types";
 
 interface AddModalProps {
   onClose: () => void;
@@ -19,14 +20,6 @@ interface IForms {
   suppliers: string;
   stock: number;
   price: number;
-}
-
-interface IFormsToBD {
-  name: string;
-  category: string;
-  suppliers: string;
-  stock: string;
-  price: string;
 }
 
 const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
@@ -68,7 +61,7 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   }, [selectedFilter, setValue]);
 
   const onSubmit = (data: IForms) => {
-    const newProduct: IFormsToBD = {
+    const newProduct: IProductsToBD = {
       name: data.name,
       category: data.category,
       suppliers: data.suppliers,
@@ -141,22 +134,43 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
           </div>
 
           <div>
-            <input
-              {...register("stock")}
-              className={css.input}
-              placeholder="Stock"
-              type="number"
+            <Controller
+              name="stock"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Stock"
+                  type="number"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(",", ".");
+                    field.onChange(value);
+                  }}
+                />
+              )}
             />
             <p className={css.errormessage}>{errors.stock?.message}</p>
           </div>
 
           <div>
-            <input
-              {...register("price")}
-              className={css.input}
-              placeholder="Price"
-              type="number"
+            <Controller
+              name="price"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Price"
+                  type="number"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(",", ".");
+                    field.onChange(value);
+                  }}
+                />
+              )}
             />
+
             <p className={css.errormessage}>{errors.price?.message}</p>
           </div>
         </div>
