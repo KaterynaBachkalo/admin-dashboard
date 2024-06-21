@@ -7,12 +7,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Icon from "../Icon";
 import Dropdown from "../DropdownStatus/Dropdown";
-import { Suppliers } from "../AllSuppliers/AllSuppliersTable/AllSuppliersTable";
 import useCloseDropdown from "../../services/closeDropdown";
 import css from "./EditModal.module.css";
+import { ISuppliers } from "../../types";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { editSupplier } from "../../redux/admin/operation";
+import { toast } from "react-toastify";
 
 interface EditModalProps {
-  data: Suppliers;
+  data: ISuppliers;
   onClose: () => void;
 }
 
@@ -21,7 +25,7 @@ interface IForms {
   address: string;
   suppliers: string;
   date: string;
-  amount: string;
+  amount: number;
   status: string;
 }
 
@@ -33,6 +37,8 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(data.status);
   const [isOpenCalendar, setOpenCalendar] = useState(false);
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const dateString = data.date;
   const date = new Date(dateString);
@@ -60,7 +66,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       suppliers: yup.string().required("Company is required"),
       date: yup.string().required("Date is required"),
       amount: yup
-        .string()
+        .number()
         .typeError("Ammount is required and must be a number")
         .required(),
       status: yup.string().required("Status is required"),
@@ -80,14 +86,25 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       address: data.address,
       suppliers: data.suppliers,
       date: data.date,
-      amount: data.amount,
+      amount: Number(data.amount.split(" ").slice(1).join()),
       status: data.status,
     },
   });
 
-  const onSubmit = (data: IForms) => {
-    console.log(data);
+  const onSubmit = (formData: IForms) => {
+    const updatedSupplier: ISuppliers = {
+      ...data,
+      name: formData.name,
+      address: formData.address,
+      suppliers: formData.suppliers,
+      date: formData.date,
+      amount: formData.amount.toString(),
+      status: formData.status,
+    };
+    const { _id, ...updateData } = updatedSupplier;
 
+    dispatch(editSupplier({ _id: data._id, ...updateData }));
+    toast.success("The supplier was successfully updated");
     onClose();
   };
 
@@ -180,11 +197,23 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
           </div>
 
           <div>
-            <input
-              {...register("amount")}
-              className={css.input}
-              placeholder="Amount"
+            <Controller
+              name="amount"
+              control={control}
+              render={({ field }) => (
+                <input
+                  {...field}
+                  className={css.input}
+                  placeholder="Amount"
+                  type="number"
+                  onChange={(e) => {
+                    const value = e.target.value.replace(",", ".");
+                    field.onChange(value);
+                  }}
+                />
+              )}
             />
+
             <p className={css.errormessage}>{errors.amount?.message}</p>
           </div>
 
