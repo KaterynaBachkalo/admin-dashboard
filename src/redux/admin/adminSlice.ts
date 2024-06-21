@@ -1,8 +1,10 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
   addProduct,
+  addSupplier,
   deleteProduct,
   editProduct,
+  editSupplier,
   fetchCustomers,
   fetchData,
   fetchOrders,
@@ -209,7 +211,45 @@ const adminSlice = createSlice({
           state.error = null;
         }
       )
-      .addCase(editProduct.rejected, handleRejected);
+      .addCase(editProduct.rejected, handleRejected)
+
+      .addCase(addSupplier.pending, handlePending)
+      .addCase(
+        addSupplier.fulfilled,
+        (state: IState, action: PayloadAction<ISuppliers>) => {
+          state.isLoading = false;
+          state.suppliers.push(action.payload);
+          state.error = null;
+          toast.success("New product was successfully added");
+        }
+      )
+      .addCase(
+        addSupplier.rejected,
+        (state: IState, action: PayloadAction<any>): void => {
+          state.isLoading = false;
+          state.error = action.payload;
+
+          if (state.error === "Request failed with status code 409") {
+            toast.error("The product exists with this name");
+          }
+        }
+      )
+
+      .addCase(editSupplier.pending, handlePending)
+      .addCase(
+        editSupplier.fulfilled,
+        (state: IState, action: PayloadAction<ISuppliers>) => {
+          state.isLoading = false;
+          const index = state.suppliers.findIndex(
+            (supplier) => supplier._id === action.payload._id
+          );
+          if (index !== -1) {
+            state.suppliers[index] = action.payload;
+          }
+          state.error = null;
+        }
+      )
+      .addCase(editSupplier.rejected, handleRejected);
   },
 });
 
