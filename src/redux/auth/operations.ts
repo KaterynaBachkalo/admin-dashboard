@@ -16,6 +16,13 @@ const setRefreshToken = (refreshToken: string) => {
   adminInstance.defaults.headers.common.Authorization = `Bearer ${refreshToken}`;
 };
 
+export const refreshTokensApi = async (oldRefreshToken: string) => {
+  const { data } = await axios.post("user/refresh-token", {
+    refreshToken: oldRefreshToken,
+  });
+  return data;
+};
+
 export const logInThunk = createAsyncThunk(
   "auth/login",
   async (formData: IForms, thunkAPI) => {
@@ -73,5 +80,28 @@ export const refreshUserThunk = createAsyncThunk(
       if (!refreshToken) return false;
       return true;
     },
+  }
+);
+
+export const refreshTokensThunk = createAsyncThunk(
+  "auth/refreshTokens",
+  async (_, thunkApi) => {
+    try {
+      const currentState: any = thunkApi.getState() as RootState;
+      const oldRefreshToken = currentState.auth.refreshToken;
+
+      if (oldRefreshToken !== null) {
+        const response = await refreshTokensApi(oldRefreshToken);
+        // const { token } = response;
+        console.log(response);
+        // setToken(token);
+        // setAccessToken(accessToken);
+        // setRefreshToken(refreshToken);
+        // return response;
+      }
+    } catch (error) {
+      // const errorObj = handleApiError(error);
+      // return thunkApi.rejectWithValue(errorObj);
+    }
   }
 );

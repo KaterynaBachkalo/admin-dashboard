@@ -1,19 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { adminInstance } from "../auth/operations";
-import { IProducts } from "../../types";
+import {
+  IProducts,
+  IProductsToBD,
+  ISuppliers,
+  ISuppliersToBD,
+} from "../../types";
 
 interface FetchOrdersParams {
   page: number;
   limit: number;
   name?: string;
-}
-
-interface IFormsProducts {
-  name: string;
-  category: string;
-  suppliers: string;
-  stock: string;
-  price: string;
 }
 
 export const fetchData = createAsyncThunk(
@@ -89,7 +86,7 @@ export const fetchSuppliers = createAsyncThunk(
 
 export const addProduct = createAsyncThunk(
   "products/addProduct",
-  async (newProduct: IFormsProducts, thunkAPI) => {
+  async (newProduct: IProductsToBD, thunkAPI) => {
     try {
       const response = await adminInstance.post("/admin/products", newProduct);
 
@@ -119,6 +116,38 @@ export const editProduct = createAsyncThunk(
       const response = await adminInstance.put(
         `/admin/products/${updatedProduct._id}`,
         updatedProduct
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addSupplier = createAsyncThunk(
+  "suppliers/addSupplier",
+  async (newSupplier: ISuppliersToBD, thunkAPI) => {
+    try {
+      const response = await adminInstance.post(
+        "/admin/suppliers",
+        newSupplier
+      );
+
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editSupplier = createAsyncThunk(
+  "suppliers/editSupplier",
+  async (updatedSupplier: ISuppliers, thunkAPI) => {
+    try {
+      const response = await adminInstance.put(
+        `/admin/suppliers/${updatedSupplier._id}`,
+        updatedSupplier
       );
       console.log(response.data);
       return response.data;
