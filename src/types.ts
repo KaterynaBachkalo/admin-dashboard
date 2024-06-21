@@ -20,10 +20,28 @@ export interface IProducts {
   category: string;
 }
 
+export interface IProductsToBD {
+  name: string;
+  category: string;
+  suppliers: string;
+  stock: string;
+  price: string;
+}
+
 export interface ISuppliers {
+  _id: string;
   name: string;
   suppliers: string;
   address: string;
+  date: string;
+  amount: string;
+  status: string;
+}
+
+export interface ISuppliersToBD {
+  name: string;
+  address: string;
+  suppliers: string;
   date: string;
   amount: string;
   status: string;
