@@ -188,7 +188,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
         <div className={css.buttonWrap}>
           <button type="submit" className={css.buttonAdd}>
-            Add
+            Edit
           </button>
 
           <button type="button" className={css.buttonCancel} onClick={onClose}>
