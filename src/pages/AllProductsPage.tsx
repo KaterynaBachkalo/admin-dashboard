@@ -46,7 +46,7 @@ const AllProductsPage = () => {
       <AllProductsTable searchQuery={searchQuery} />
       <RenderPaginationDots
         currentPage={currentPage}
-        total={totalProducts}
+        total={totalProducts - 1}
         handlePageChange={handlePageChange}
       />
     </section>
