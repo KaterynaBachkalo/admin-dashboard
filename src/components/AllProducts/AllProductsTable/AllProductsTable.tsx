@@ -78,7 +78,9 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     },
   ];
 
-  const data = useMemo(() => products, [products]);
+  const data = useMemo(() => {
+    return products.filter((product) => !product.hasOwnProperty("seq_value"));
+  }, [products]);
 
   const [editModalData, setEditModalData] = useState<IProducts | null>(null);
   const [deleteModalData, setDeleteModalData] = useState<IProducts | null>(
