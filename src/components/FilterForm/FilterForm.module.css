@@ -2,7 +2,6 @@
   display: flex;
   gap: 8px;
   margin-bottom: 20px;
-  justify-content: space-between;
 }
 
 .inputWrap {
