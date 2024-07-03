@@ -5,9 +5,6 @@ import { lazy } from "react";
 import RestrictedRoute from "./components/RestrictedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import { useSelector } from "react-redux";
-import { selectAuthIsLoading } from "./redux/auth/selectors";
-import Loader from "./components/Loader/Loader";
 
 const AllProductsPage = lazy(() => import("./pages/AllProductsPage"));
 const DashboardPage = lazy(() => import("./pages/DashboardPage/DashboardPage"));
@@ -16,15 +13,6 @@ const AllSuppliersPage = lazy(() => import("./pages/AllSuppliersPage"));
 const CustomersDataPage = lazy(() => import("./pages/CustomersDataPage"));
 
 function App() {
-  const isLoading = useSelector(selectAuthIsLoading);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-  // const dispatch = useDispatch<AppDispatch>();
-  // useEffect(() => {
-  //   dispatch(refreshUserThunk());
-  // }, [dispatch]);
   return (
     <>
       <Routes>
