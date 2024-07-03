@@ -4,7 +4,7 @@ import { RootState } from "../store";
 import { IForms } from "../../types";
 
 export const adminInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://admin-dashboard-backend-d6oa.onrender.com/api",
 });
 
 const setAccessToken = (accessToken: string) => {
