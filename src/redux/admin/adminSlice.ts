@@ -58,6 +58,19 @@ export const handleRejected = (
 ): void => {
   state.isLoading = false;
   state.error = action.payload;
+
+  if (state.error) {
+    toast.error("Something went wrong...", {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
 };
 
 const INITIAL_STATE = {
