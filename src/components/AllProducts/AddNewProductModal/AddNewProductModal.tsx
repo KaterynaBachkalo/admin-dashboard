@@ -18,13 +18,15 @@ interface IForms {
   name: string;
   category: string;
   suppliers: string;
-  stock: number;
-  price: number;
+  stock: string;
+  price: string;
 }
 
 const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const [stock, setStock] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
 
   const iconref = useRef<HTMLDivElement | null>(null);
 
@@ -36,13 +38,13 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
       category: yup.string().required("Category is required"),
       suppliers: yup.string().required("Suppliers is required"),
       stock: yup
-        .number()
-        .typeError("Stock is required and must be a number")
-        .required(),
+        .string()
+        .matches(/^\d*\.?\d*$/, "Stock must be a valid number")
+        .required("Stock is required"),
       price: yup
-        .number()
-        .typeError("Price is required and must be a number")
-        .required(),
+        .string()
+        .matches(/^\d*\.?\d*$/, "Price must be a valid number")
+        .required("Price is required"),
     })
     .required();
 
@@ -142,10 +144,14 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
                   {...field}
                   className={css.input}
                   placeholder="Stock"
-                  type="number"
+                  type="text"
+                  value={stock}
                   onChange={(e) => {
                     const value = e.target.value.replace(",", ".");
-                    field.onChange(value);
+                    if (/^\d*\.?\d*$/.test(value)) {
+                      setStock(value);
+                      field.onChange(value);
+                    }
                   }}
                 />
               )}
@@ -162,10 +168,14 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
                   {...field}
                   className={css.input}
                   placeholder="Price"
-                  type="number"
+                  type="text"
+                  value={price}
                   onChange={(e) => {
                     const value = e.target.value.replace(",", ".");
-                    field.onChange(value);
+                    if (/^\d*\.?\d*$/.test(value)) {
+                      setPrice(value);
+                      field.onChange(value);
+                    }
                   }}
                 />
               )}
