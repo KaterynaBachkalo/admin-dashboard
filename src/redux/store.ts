@@ -60,7 +60,6 @@ adminInstance.interceptors.response.use(
     if (error.response.status === 401) {
       try {
         const refreshToken = store.getState().auth.refreshToken;
-        console.log(refreshToken);
         if (!refreshToken) return;
 
         const isRefreshTokenFail = await store.dispatch(refreshTokenThunk());
