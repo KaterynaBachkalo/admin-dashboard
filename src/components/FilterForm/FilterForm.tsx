@@ -21,6 +21,10 @@ const FilterForm: FC<IProps> = ({ setSearchQuery, placeholder }) => {
     setSearchQuery(data.name);
   };
 
+  const handleBlur = () => {
+    handleSubmit(onSubmit)();
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={css.wrap}>
@@ -28,6 +32,7 @@ const FilterForm: FC<IProps> = ({ setSearchQuery, placeholder }) => {
           {...register("name")}
           className={css.input}
           placeholder={placeholder}
+          onBlur={handleBlur}
         />
 
         <button type="submit" className={css.button}>
