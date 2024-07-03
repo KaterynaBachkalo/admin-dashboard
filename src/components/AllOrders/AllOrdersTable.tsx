@@ -7,7 +7,8 @@ import {
 import css from "./AllOrdersTable.module.css";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { selectOrders } from "../../redux/admin/selectors";
+import { selectIsLoading, selectOrders } from "../../redux/admin/selectors";
+import Loader from "../Loader/Loader";
 
 interface Person {
   name: string;
@@ -69,6 +70,8 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
+  const isLoading = useSelector(selectIsLoading);
+
   const orders = useSelector(selectOrders);
 
   const data = useMemo(() => orders, [orders]);
@@ -154,7 +157,10 @@ const AllOrdersTable = ({ searchQuery }: { searchQuery: string }) => {
           })}
         </tbody>
       </table>
-      {data.length === 0 && (
+
+      {isLoading && data.length === 0 && <Loader />}
+
+      {!isLoading && data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>

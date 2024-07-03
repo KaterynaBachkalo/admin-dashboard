@@ -10,10 +10,16 @@ import Icon from "../../Icon";
 import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModaSupplier/EditModal";
 import { useSelector } from "react-redux";
-import { selectSuppliers } from "../../../redux/admin/selectors";
+import {
+  selectIsLoading,
+  selectSuppliers,
+} from "../../../redux/admin/selectors";
 import { ISuppliers } from "../../../types";
+import Loader from "../../Loader/Loader";
 
 const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
+  const isLoading = useSelector(selectIsLoading);
+
   const suppliers = useSelector(selectSuppliers);
 
   const columns: ColumnDef<ISuppliers>[] = [
@@ -162,7 +168,9 @@ const AllSuppliersTable = ({ searchQuery }: { searchQuery: string }) => {
         </tbody>
       </table>
 
-      {data.length === 0 && (
+      {isLoading && data.length === 0 && <Loader />}
+
+      {!isLoading && data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>

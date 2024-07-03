@@ -11,14 +11,20 @@ import Modal from "../../Modal/Modal";
 import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal/DeleteModal";
 import { useSelector } from "react-redux";
-import { selectProducts } from "../../../redux/admin/selectors";
+import {
+  selectIsLoading,
+  selectProducts,
+} from "../../../redux/admin/selectors";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
 import { deleteProduct } from "../../../redux/admin/operation";
 import { IProducts } from "../../../types";
 import { toast } from "react-toastify";
+import Loader from "../../Loader/Loader";
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
+  const isLoading = useSelector(selectIsLoading);
+
   const products = useSelector(selectProducts);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -176,7 +182,9 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
         </tbody>
       </table>
 
-      {data.length === 0 && (
+      {isLoading && data.length === 0 && <Loader />}
+
+      {!isLoading && data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>

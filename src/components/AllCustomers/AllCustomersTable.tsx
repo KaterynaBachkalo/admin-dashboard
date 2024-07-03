@@ -7,7 +7,8 @@ import {
 import css from "./AllCustomersTable.module.css";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { selectCustomers } from "../../redux/admin/selectors";
+import { selectCustomers, selectIsLoading } from "../../redux/admin/selectors";
+import Loader from "../Loader/Loader";
 
 export interface Person {
   avatar: string | undefined;
@@ -19,6 +20,8 @@ export interface Person {
 }
 
 const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
+  const isLoading = useSelector(selectIsLoading);
+
   const customers = useSelector(selectCustomers);
 
   const columns: ColumnDef<Person>[] = [
@@ -150,8 +153,9 @@ const AllCustomersTable = ({ searchQuery }: { searchQuery: string }) => {
           })}
         </tbody>
       </table>
+      {isLoading && data.length === 0 && <Loader />}
 
-      {data.length === 0 && (
+      {!isLoading && data.length === 0 && (
         <div className={css.noResults}>
           No results found for your search query.
         </div>

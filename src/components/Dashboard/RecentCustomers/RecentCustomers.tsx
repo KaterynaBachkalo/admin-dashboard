@@ -8,7 +8,11 @@ import css from "./RecentCustomers.module.css";
 
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { selectCustomers } from "../../../redux/admin/selectors";
+import {
+  selectCustomers,
+  selectIsLoading,
+} from "../../../redux/admin/selectors";
+import Loader from "../../Loader/Loader";
 
 interface Person {
   name: string;
@@ -52,6 +56,8 @@ const columns: ColumnDef<Person>[] = [
 ];
 
 const RecentCustomersTable = () => {
+  const isLoading = useSelector(selectIsLoading);
+
   const customers = useSelector(selectCustomers);
 
   const myCustomers = customers
@@ -79,60 +85,66 @@ const RecentCustomersTable = () => {
   });
 
   return (
-    <table className={css.table}>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup, index) => (
-          <tr
-            key={headerGroup.id}
-            className={index === 0 ? css.header : css.subheader}
-          >
-            {headerGroup.headers.map((header) => (
-              <th
-                key={header.id}
-                colSpan={header.colSpan}
-                className={index === 0 ? css.header : css.subheader}
-              >
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => {
-          return (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                const cellValue = cell.getValue() as string;
-                return (
-                  <td
-                    key={cell.id}
-                    title={cellValue}
-                    className={`${css.row} ${
-                      cell.column.id === "name"
-                        ? css["col-name"]
-                        : cell.column.id === "email"
-                        ? css["col-email"]
-                        : cell.column.id === "spent"
-                        ? css["col-spent"]
-                        : ""
-                    }`}
-                    style={{ width: cell.column.getSize() }}
-                  >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                );
-              })}
+    <>
+      <table className={css.table}>
+        <thead>
+          {table.getHeaderGroups().map((headerGroup, index) => (
+            <tr
+              key={headerGroup.id}
+              className={index === 0 ? css.header : css.subheader}
+            >
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  colSpan={header.colSpan}
+                  className={index === 0 ? css.header : css.subheader}
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  const cellValue = cell.getValue() as string;
+                  return (
+                    <td
+                      key={cell.id}
+                      title={cellValue}
+                      className={`${css.row} ${
+                        cell.column.id === "name"
+                          ? css["col-name"]
+                          : cell.column.id === "email"
+                          ? css["col-email"]
+                          : cell.column.id === "spent"
+                          ? css["col-spent"]
+                          : ""
+                      }`}
+                      style={{ width: cell.column.getSize() }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      {isLoading && data.length === 0 && <Loader />}
+    </>
   );
 };
 
