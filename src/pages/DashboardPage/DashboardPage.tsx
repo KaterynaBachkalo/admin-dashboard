@@ -11,7 +11,17 @@ const DasboardPage = () => {
   const dispatch = useDispatch() as AppDispatch;
 
   useEffect(() => {
-    dispatch(fetchData());
+    let isMounted = true;
+
+    (async () => {
+      if (isMounted) {
+        dispatch(fetchData());
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
   }, [dispatch]);
 
   return (
