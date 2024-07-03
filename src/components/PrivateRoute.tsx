@@ -27,21 +27,22 @@ const PrivateRoute: React.FC<IProps> = ({
 
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    // console.log(isLoading);
-    // console.log(authenticated);
-    if (!isLoading && !authenticated) dispatch(refreshUserThunk());
-  }, [dispatch, isLoading, authenticated, token]);
-
-  if (!isLoading && !authenticated && token) return null;
-
   // useEffect(() => {
-  //   if (!authenticated && token) dispatch(refreshUserThunk());
-  // }, [authenticated, token, dispatch]);
+  //   // console.log(isLoading);
+  //   // console.log(authenticated);
+  //   dispatch(refreshUserThunk());
+  //   // if (!isLoading && !authenticated) dispatch(refreshUserThunk());
+  // }, [dispatch, isLoading, authenticated, token]);
 
-  // if (isLoading || (token && !authenticated)) {
-  //   return null;
-  // }
+  // if (!isLoading && !authenticated && token) return null;
+
+  useEffect(() => {
+    if (!authenticated && token) dispatch(refreshUserThunk());
+  }, [authenticated, token, dispatch]);
+
+  if (isLoading || (token && !authenticated)) {
+    return null;
+  }
 
   return authenticated ? Component : <Navigate to={redirectTo} replace />;
 };
