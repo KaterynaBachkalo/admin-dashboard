@@ -7,7 +7,6 @@ export const adminInstance = axios.create({
   baseURL: "http://localhost:3000/api",
 });
 
-// Utility to add JWT
 const setAccessToken = (accessToken: string) => {
   adminInstance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 };
@@ -17,10 +16,10 @@ const setRefreshToken = (refreshToken: string) => {
 };
 
 export const refreshTokensApi = async (oldRefreshToken: string) => {
-  const { data } = await axios.post("user/refresh-token", {
-    refreshToken: oldRefreshToken,
+  const response = await adminInstance.post("user/refresh-token", {
+    token: oldRefreshToken,
   });
-  return data;
+  return response.data;
 };
 
 export const logInThunk = createAsyncThunk(
@@ -55,16 +54,12 @@ export const refreshUserThunk = createAsyncThunk(
   async (_, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
 
-    // const token = state.auth.token;
     const accessToken = state.auth.accessToken;
     const refreshToken = state.auth.refreshToken;
-
     try {
-      // setToken(token);
-      setAccessToken(accessToken);
-      setRefreshToken(refreshToken);
+      accessToken && setAccessToken(accessToken);
+      refreshToken && setRefreshToken(refreshToken);
       const response = await adminInstance.get("/user/user-info");
-
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
@@ -76,32 +71,32 @@ export const refreshUserThunk = createAsyncThunk(
       const accessToken = state.auth.accessToken;
       const refreshToken = state.auth.refreshToken;
 
-      if (!accessToken) return false;
-      if (!refreshToken) return false;
+      if (!accessToken || !refreshToken) return false;
       return true;
     },
   }
 );
 
-export const refreshTokensThunk = createAsyncThunk(
+export const refreshTokenThunk = createAsyncThunk(
   "auth/refreshTokens",
   async (_, thunkApi) => {
     try {
-      const currentState: any = thunkApi.getState() as RootState;
+      const currentState = thunkApi.getState() as RootState;
       const oldRefreshToken = currentState.auth.refreshToken;
 
-      if (oldRefreshToken !== null) {
+      if (oldRefreshToken) {
         const response = await refreshTokensApi(oldRefreshToken);
-        // const { token } = response;
-        console.log(response);
-        // setToken(token);
-        // setAccessToken(accessToken);
-        // setRefreshToken(refreshToken);
-        // return response;
+        const { accessToken, refreshToken } = response;
+
+        setAccessToken(accessToken);
+        setRefreshToken(refreshToken);
+
+        return response;
+      } else {
+        throw new Error("Refresh token is missing");
       }
-    } catch (error) {
-      // const errorObj = handleApiError(error);
-      // return thunkApi.rejectWithValue(errorObj);
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message || "An error occurred");
     }
   }
 );

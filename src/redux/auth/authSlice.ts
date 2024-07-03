@@ -1,5 +1,10 @@
 import { PayloadAction, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { logInThunk, logOutThunk, refreshUserThunk } from "./operations";
+import {
+  logInThunk,
+  logOutThunk,
+  refreshTokenThunk,
+  refreshUserThunk,
+} from "./operations";
 import { toast } from "react-toastify";
 
 export interface IState {
@@ -85,7 +90,16 @@ const authSlice = createSlice({
         if (state.accessToken === null) return;
         if (state.refreshToken === null) return;
       })
-
+      .addCase(
+        refreshTokenThunk.fulfilled,
+        (state: IState, action: PayloadAction<any>) => {
+          state.accessToken = action.payload.accessToken;
+          state.refreshToken = action.payload.refreshToken;
+          state.isLoading = false;
+          state.authenticated = true;
+          state.error = null;
+        }
+      )
       .addCase(logOutThunk.fulfilled, (state: IState) => {
         state.accessToken = "";
         state.refreshToken = "";
@@ -98,7 +112,8 @@ const authSlice = createSlice({
         isAnyOf(
           logOutThunk.pending,
           logInThunk.pending,
-          refreshUserThunk.pending
+          refreshUserThunk.pending,
+          refreshTokenThunk.pending
         ),
         handlePending
       )
@@ -106,11 +121,14 @@ const authSlice = createSlice({
         isAnyOf(
           logOutThunk.rejected,
           logInThunk.rejected,
-          refreshUserThunk.rejected
+          refreshUserThunk.rejected,
+          refreshTokenThunk.rejected
         ),
         handleRejected
       );
   },
 });
+
+export const { resetToken } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;
