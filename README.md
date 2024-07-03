@@ -19,8 +19,8 @@ The project is deployed on GitHub Pages and https://render.com/
 ![Login page screenshot](./src/img/loginPage.png)
 
 On this page, the admin enters his email and password to enter the Admin dashboard.
-Емейл: adminka@mail.com
-Пароль: adminka
+E-mail: adminka@mail.com
+Password: adminka
 
 ## All the following pages are available for authorized users
 
