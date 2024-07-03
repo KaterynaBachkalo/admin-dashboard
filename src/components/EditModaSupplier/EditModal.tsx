@@ -73,6 +73,8 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
     })
     .required();
 
+  const amountNumber = Number(data.amount.split(" ").slice(1).join());
+
   const {
     register,
     handleSubmit,
@@ -86,7 +88,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       address: data.address,
       suppliers: data.suppliers,
       date: data.date,
-      amount: Number(data.amount.split(" ").slice(1).join()),
+      amount: amountNumber,
       status: data.status,
     },
   });
@@ -98,7 +100,7 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
       address: formData.address,
       suppliers: formData.suppliers,
       date: formData.date,
-      amount: formData.amount.toString(),
+      amount: `৳ ${formData.amount.toString()}`,
       status: formData.status,
     };
     const { _id, ...updateData } = updatedSupplier;
@@ -115,7 +117,9 @@ const EditModal: FC<EditModalProps> = ({ data, onClose }) => {
 
   useEffect(() => {
     setValue("status", selectedStatus);
-  }, [selectedStatus, setValue]);
+    setValue("amount", amountNumber);
+    selectedDate && setValue("date", selectedDate);
+  }, [selectedStatus, setValue, amountNumber, selectedDate]);
 
   useCloseDropdown(setOpenCalendar, calendarRef, iconDateref);
 
