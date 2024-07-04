@@ -57,10 +57,7 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
       address: yup.string().required("Address is required"),
       suppliers: yup.string().required("Company is required"),
       date: yup.string().required("Date is required"),
-      amount: yup
-        .number()
-        .typeError("Ammount is required and must be a number")
-        .required(),
+      amount: yup.number().required("Ammount is required and must be a number"),
       status: yup.string().required("Status is required"),
     })
     .required();
@@ -144,7 +141,9 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
                 />
               )}
             />
-            <p className={css.errormessage}>{errors.date?.message}</p>
+            {!selectedDate && (
+              <p className={css.errormessage}>{errors.date?.message}</p>
+            )}
 
             <div
               className={css.iconCalendar}
@@ -172,6 +171,7 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
                       .toLocaleDateString(locale, { weekday: "short" })
                       .substring(0, 2)
                   }
+                  minDate={new Date()}
                 />
               </div>
             )}
@@ -212,7 +212,9 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
                 />
               )}
             />
-            <p className={css.errormessage}>{errors.status?.message}</p>
+            {!selectedStatus && (
+              <p className={css.errormessage}>{errors.status?.message}</p>
+            )}
 
             <div
               className={css.iconChevron}

@@ -39,12 +39,12 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
       suppliers: yup.string().required("Suppliers is required"),
       stock: yup
         .string()
-        .matches(/^\d*\.?\d*$/, "Stock must be a valid number")
-        .required("Stock is required"),
+        .matches(/^\d*\.?\d*$/, "Stock must be a number")
+        .required("Stock is required and must be a number"),
       price: yup
         .string()
-        .matches(/^\d*\.?\d*$/, "Price must be a valid number")
-        .required("Price is required"),
+        .matches(/^\d*\.?\d*$/, "Price must be a number")
+        .required("Price is required and must be a number"),
     })
     .required();
 
