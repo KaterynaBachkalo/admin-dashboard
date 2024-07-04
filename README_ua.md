@@ -69,7 +69,7 @@
 
 ## Демо
 
-Проєкт доступний за посиланням [Admin dashboard](https://katerynabachkalo.github.io/admin-dashboard/dashboard).
+Проєкт доступний за посиланням [Admin dashboard](https://katerynabachkalo.github.io/admin-dashboard).
 
 ## Технології, які використовувались
 

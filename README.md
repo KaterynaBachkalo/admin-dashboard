@@ -69,7 +69,7 @@ Implemented pagination.
 
 ## Demo
 
-The project is available at the link [Admin dashboard](https://katerynabachkalo.github.io/admin-dashboard/dashboard).
+The project is available at the link [Admin dashboard](https://katerynabachkalo.github.io/admin-dashboard).
 
 ## Technologies used in the project
 
