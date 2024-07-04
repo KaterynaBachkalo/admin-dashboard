@@ -38,6 +38,7 @@
 
 .errormessage {
   color: red;
+  font-size: 12px;
 }
 
 .iconChevron {
@@ -96,6 +97,7 @@
 }
 
 @media only screen and (min-width: 768px) {
+
   .input,
   .button {
     width: calc((536px - 80px - 8px) / 2);
