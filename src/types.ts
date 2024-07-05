@@ -11,7 +11,7 @@ export interface ICustomers {
 
 export interface IProducts {
   _id: string;
-  id: string;
+  id: number;
   photo: string;
   name: string;
   suppliers: string;
@@ -21,6 +21,7 @@ export interface IProducts {
 }
 
 export interface IProductsToBD {
+  id: number;
   name: string;
   category: string;
   suppliers: string;
