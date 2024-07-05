@@ -14,7 +14,11 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authReducer, resetToken } from "./auth/authSlice";
-import { adminInstance, refreshTokenThunk } from "./auth/operations";
+import {
+  adminInstance,
+  logOutThunk,
+  refreshTokenThunk,
+} from "./auth/operations";
 
 const authConfig = {
   key: "auth",
@@ -58,17 +62,24 @@ adminInstance.interceptors.response.use(
   },
   async function (error) {
     if (error.response.status === 401) {
+      if (error.response.data.message === "Invalid refresh token") {
+        store.dispatch(logOutThunk());
+
+        return;
+      }
+
       try {
         const refreshToken = store.getState().auth.refreshToken;
 
         if (!refreshToken) {
-          store.dispatch(resetToken(store.getState()));
           return;
         }
 
         const isRefreshTokenFail = await store.dispatch(refreshTokenThunk());
+
         if (isRefreshTokenFail.payload.errorCode === 500) {
           store.dispatch(resetToken(store.getState()));
+
           return;
         }
 
