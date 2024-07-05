@@ -59,7 +59,7 @@ export const handleRejected = (
   state.isLoading = false;
   state.error = action.payload;
 
-  if (state.error) {
+  if (state.error === 400) {
     toast.error("Something went wrong...", {
       position: "top-center",
       autoClose: 2000,

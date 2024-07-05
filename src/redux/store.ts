@@ -61,13 +61,12 @@ adminInstance.interceptors.response.use(
     return response;
   },
   async function (error) {
+    if (error.response.data.message === "Invalid refresh token") {
+      store.dispatch(resetToken(store.getState()));
+      return;
+    }
+
     if (error.response.status === 401) {
-      if (error.response.data.message === "Invalid refresh token") {
-        store.dispatch(logOutThunk());
-
-        return;
-      }
-
       try {
         const refreshToken = store.getState().auth.refreshToken;
 
