@@ -180,7 +180,7 @@ const adminSlice = createSlice({
         addProduct.fulfilled,
         (state: IState, action: PayloadAction<IProducts>) => {
           state.isLoading = false;
-          state.products.push(action.payload);
+          state.products.unshift(action.payload);
           state.error = null;
           toast.success("New product was successfully added");
         }
