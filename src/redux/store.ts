@@ -14,11 +14,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authReducer, resetToken } from "./auth/authSlice";
-import {
-  adminInstance,
-  logOutThunk,
-  refreshTokenThunk,
-} from "./auth/operations";
+import { adminInstance, refreshTokenThunk } from "./auth/operations";
 
 const authConfig = {
   key: "auth",
