@@ -19,7 +19,7 @@ const Statistics = () => {
           <Icon name="coins" />
           <p className={css.text}>All products</p>
         </div>
-        <p className={css.number}>{totalProducts - 1}</p>
+        <p className={css.number}>{totalProducts}</p>
       </div>
 
       <div className={css.border}>
