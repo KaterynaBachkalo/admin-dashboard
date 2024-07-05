@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { addProduct } from "../../../redux/admin/operation";
 import { AppDispatch } from "../../../redux/store";
 import { IProductsToBD } from "../../../types";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../../redux/admin/selectors";
 
 interface AddModalProps {
   onClose: () => void;
@@ -27,6 +29,7 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const [selectedFilter, setSelectedFilter] = useState("");
   const [stock, setStock] = useState<string>("");
   const [price, setPrice] = useState<string>("");
+  const products = useSelector(selectProducts);
 
   const iconref = useRef<HTMLDivElement | null>(null);
 
@@ -63,7 +66,10 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   }, [selectedFilter, setValue]);
 
   const onSubmit = (data: IForms) => {
+    const firstId = products[0].id;
+
     const newProduct: IProductsToBD = {
+      id: firstId + 1,
       name: data.name,
       category: data.category,
       suppliers: data.suppliers,
