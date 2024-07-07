@@ -60,18 +60,20 @@ const RecentCustomersTable = () => {
 
   const customers = useSelector(selectCustomers);
 
-  const myCustomers = customers
-    .map((customer) => {
-      return {
-        avatar: customer.image || customer.photo,
-        name: customer.name,
-        email: customer.email,
-        spent: customer.spent,
-      };
-    })
-    .slice(-5);
-
-  const data = useMemo(() => myCustomers, [myCustomers]);
+  const data = useMemo(
+    () =>
+      customers
+        .map((customer) => {
+          return {
+            avatar: customer.image || customer.photo,
+            name: customer.name,
+            email: customer.email,
+            spent: customer.spent,
+          };
+        })
+        .slice(0, 5),
+    [customers]
+  );
 
   const table = useReactTable({
     data,
