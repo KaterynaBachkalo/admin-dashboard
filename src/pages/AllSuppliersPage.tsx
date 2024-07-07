@@ -13,6 +13,8 @@ import {
 import { fetchSuppliers } from "../redux/admin/operation";
 import RenderPaginationDots from "../components/Pagination/RenderPaginationDots";
 import { setCurrentPage } from "../redux/admin/adminSlice";
+import { adminInstance } from "../redux/auth/operations";
+import { ISuppliersToBD } from "../types";
 
 const AllSuppliersPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -39,11 +41,22 @@ const AllSuppliersPage = () => {
     dispatch(setCurrentPage(1));
   }, [searchQuery, dispatch]);
 
+  const handleAddSupplier = async (supplier: ISuppliersToBD) => {
+    await adminInstance.post("/admin/suppliers", supplier);
+    dispatch(
+      fetchSuppliers({
+        page: currentPage,
+        limit: 5,
+        ...(searchQuery && { name: searchQuery }),
+      })
+    );
+  };
+
   return (
     <section className={css.container}>
       <div className={css.wrap}>
         <FilterForm setSearchQuery={setSearchQuery} placeholder="User Name" />
-        <AddNewSupplier />
+        <AddNewSupplier onAddSupplier={handleAddSupplier} />
       </div>
       <AllSuppliersTable searchQuery={searchQuery} />
       <RenderPaginationDots

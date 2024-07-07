@@ -12,20 +12,24 @@ import EditModal from "../../EditModalProduct/EditModal";
 import DeleteModal from "../../DeleteModal/DeleteModal";
 import { useSelector } from "react-redux";
 import {
+  selectCurrentPage,
   selectIsLoading,
   selectProducts,
 } from "../../../redux/admin/selectors";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
-import { deleteProduct } from "../../../redux/admin/operation";
+import { deleteProduct, fetchProducts } from "../../../redux/admin/operation";
 import { IProducts } from "../../../types";
 import { toast } from "react-toastify";
 import Loader from "../../Loader/Loader";
+import { adminInstance } from "../../../redux/auth/operations";
 
 const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
   const isLoading = useSelector(selectIsLoading);
 
   const products = useSelector(selectProducts);
+
+  const currentPage = useSelector(selectCurrentPage);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -117,8 +121,16 @@ const AllProductsTable = ({ searchQuery }: { searchQuery: string }) => {
     getCoreRowModel: getCoreRowModel(),
   });
 
-  const handleDelete = (_id: string) => {
-    dispatch(deleteProduct(_id));
+  const handleDelete = async (_id: string) => {
+    await adminInstance.delete(`/admin/products/${_id}`);
+    dispatch(
+      fetchProducts({
+        page: currentPage,
+        limit: 5,
+        ...(searchQuery && { name: searchQuery }),
+      })
+    );
+
     toast.success("The product is successfully deleted");
     closeDeleteModal();
   };
