@@ -1,9 +1,14 @@
 import css from "./AddNewSupplier.module.css";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Modal from "../../Modal/Modal";
 import AddNewSupplierModal from "../AddNewSupplierModal/AddNewSupplierModal";
+import { ISuppliersToBD } from "../../../types";
 
-const AddNewSupplier = () => {
+interface IAddSupplier {
+  onAddSupplier: (supplier: ISuppliersToBD) => void;
+}
+
+const AddNewSupplier: FC<IAddSupplier> = ({ onAddSupplier }) => {
   const [isOpenModal, setOpenModal] = useState(false);
 
   const closeAddModal = () => {
@@ -18,7 +23,10 @@ const AddNewSupplier = () => {
 
       {isOpenModal && (
         <Modal onClose={closeAddModal} title="Add a new supplier">
-          <AddNewSupplierModal onClose={closeAddModal} />
+          <AddNewSupplierModal
+            onClose={closeAddModal}
+            onAddSupplier={onAddSupplier}
+          />
         </Modal>
       )}
     </>
