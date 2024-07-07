@@ -1,10 +1,15 @@
 import css from "./AddNewProduct.module.css";
 import Icon from "../../Icon";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Modal from "../../Modal/Modal";
 import AddNewProductModal from "../AddNewProductModal/AddNewProductModal";
+import { IProductsToBD } from "../../../types";
 
-const AddNewProduct = () => {
+interface IAddProduct {
+  onAddProduct: (product: IProductsToBD) => void;
+}
+
+const AddNewProduct: FC<IAddProduct> = ({ onAddProduct }) => {
   const [isOpenModal, setOpenModal] = useState(false);
 
   const closeAddModal = () => {
@@ -19,7 +24,10 @@ const AddNewProduct = () => {
 
       {isOpenModal && (
         <Modal onClose={closeAddModal} title="Add a new product">
-          <AddNewProductModal onClose={closeAddModal} />
+          <AddNewProductModal
+            onClose={closeAddModal}
+            onAddProduct={onAddProduct}
+          />
         </Modal>
       )}
     </>
