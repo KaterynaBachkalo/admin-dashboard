@@ -18,7 +18,7 @@ import {
 } from "../../../redux/admin/selectors";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
-import { deleteProduct, fetchProducts } from "../../../redux/admin/operation";
+import { fetchProducts } from "../../../redux/admin/operation";
 import { IProducts } from "../../../types";
 import { toast } from "react-toastify";
 import Loader from "../../Loader/Loader";
