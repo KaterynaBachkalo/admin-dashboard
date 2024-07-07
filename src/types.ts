@@ -31,6 +31,7 @@ export interface IProductsToBD {
 
 export interface ISuppliers {
   _id: string;
+  id: number;
   name: string;
   suppliers: string;
   address: string;
@@ -40,6 +41,7 @@ export interface ISuppliers {
 }
 
 export interface ISuppliersToBD {
+  id: number;
   name: string;
   address: string;
   suppliers: string;
