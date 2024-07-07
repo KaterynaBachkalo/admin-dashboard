@@ -49,7 +49,7 @@ const IncomeExpenses = () => {
 
   const incomes = useSelector(selectIncomeExpenses);
 
-  const data = useMemo(() => incomes.slice(-6), [incomes]);
+  const data = useMemo(() => incomes.slice(0, 6), [incomes]);
 
   const table = useReactTable({
     data,
