@@ -83,7 +83,6 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose, onAddSupplier }) => {
       amount: `৳ ${data.amount.toString()}`,
       status: data.status,
     };
-    // dispatch(addSupplier(newSupplier));
     onAddSupplier(newSupplier);
     onClose();
   };
