@@ -8,13 +8,13 @@ import * as yup from "yup";
 import Dropdown from "../../DropdownStatus/Dropdown";
 import useCloseDropdown from "../../../services/closeDropdown";
 import css from "./AddNewSupplierModal.module.css";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../redux/store";
-import { addSupplier } from "../../../redux/admin/operation";
 import { ISuppliersToBD } from "../../../types";
+import { useSelector } from "react-redux";
+import { selectSuppliers } from "../../../redux/admin/selectors";
 
 interface AddModalProps {
   onClose: () => void;
+  onAddSupplier: (supplier: ISuppliersToBD) => void;
 }
 
 interface IForms {
@@ -30,14 +30,13 @@ type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
+const AddNewSupplierModal: FC<AddModalProps> = ({ onClose, onAddSupplier }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [isOpenCalendar, setOpenCalendar] = useState(false);
-
   const [value, onChange] = useState<Value>(null);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const suppliers = useSelector(selectSuppliers);
 
   const myDate = value?.toString();
   const dateArray = myDate?.split(" ").slice(1, 4);
@@ -73,7 +72,10 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
   });
 
   const onSubmit = (data: IForms) => {
+    const firstId = suppliers[0].id;
+
     const newSupplier: ISuppliersToBD = {
+      id: firstId + 1,
       name: data.name,
       address: data.address,
       suppliers: data.suppliers,
@@ -81,7 +83,8 @@ const AddNewSupplierModal: FC<AddModalProps> = ({ onClose }) => {
       amount: `৳ ${data.amount.toString()}`,
       status: data.status,
     };
-    dispatch(addSupplier(newSupplier));
+    // dispatch(addSupplier(newSupplier));
+    onAddSupplier(newSupplier);
     onClose();
   };
 
