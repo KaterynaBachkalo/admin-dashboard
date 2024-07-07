@@ -5,15 +5,13 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Dropdown from "../../Dropdown/Dropdown";
-import { useDispatch } from "react-redux";
-import { addProduct } from "../../../redux/admin/operation";
-import { AppDispatch } from "../../../redux/store";
 import { IProductsToBD } from "../../../types";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../../redux/admin/selectors";
 
 interface AddModalProps {
   onClose: () => void;
+  onAddProduct: (product: IProductsToBD) => void;
 }
 
 interface IForms {
@@ -24,7 +22,7 @@ interface IForms {
   price: string;
 }
 
-const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
+const AddNewProductModal: FC<AddModalProps> = ({ onClose, onAddProduct }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("");
   const [stock, setStock] = useState<string>("");
@@ -32,8 +30,6 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
   const products = useSelector(selectProducts);
 
   const iconref = useRef<HTMLDivElement | null>(null);
-
-  const dispatch = useDispatch<AppDispatch>();
 
   const schema = yup
     .object({
@@ -77,7 +73,8 @@ const AddNewProductModal: FC<AddModalProps> = ({ onClose }) => {
       price: data.price.toString(),
     };
 
-    dispatch(addProduct(newProduct));
+    // dispatch(addProduct(newProduct));
+    onAddProduct(newProduct);
     onClose();
   };
 
