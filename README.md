@@ -4,7 +4,7 @@
 
 ## Description
 
-A web application on React for a Dashboard page that displays information about income, expenses and other statistics of a medical store.
+A web application for a Admin Dashboard that displays information about income, expenses and other statistics of a medical store.
 
 The project is deployed on GitHub Pages and https://render.com/
 
