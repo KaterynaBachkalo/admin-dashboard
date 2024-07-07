@@ -15,9 +15,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  max-height: 100vh;
+  max-height: calc(100vh - 20px);
   max-width: 375px;
-  overflow-y: auto;
 }
 
 .modal {
@@ -27,14 +26,14 @@
 
   background: rgb(255, 255, 255);
   z-index: 300;
-  max-height: calc(100vh - 20px);
   width: calc(100vw - 20px);
-  overflow-y: auto;
 }
+
+
 
 @media only screen and (min-width: 375px) {
   .modal {
-    width: 355px;
+    width: 335px;
   }
 }
 
@@ -55,6 +54,16 @@
   line-height: 1.2;
 
   margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 375px) {
+  .container {
+    overflow-y: scroll;
+  }
+
+  .modal {
+    overflow-y: scroll;
+  }
 }
 
 @media only screen and (min-width: 768px) {
