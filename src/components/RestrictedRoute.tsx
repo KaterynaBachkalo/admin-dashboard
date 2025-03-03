@@ -1,7 +1,14 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { selectIsAuthenticated } from "../redux/auth/selectors";
+import {
+  selectAuthAccessToken,
+  selectIsAuthenticated,
+} from "../redux/auth/selectors";
 import { selectIsLoading } from "../redux/admin/selectors";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { useEffect } from "react";
+import { refreshUserThunk } from "../redux/auth/operations";
 
 interface IProps {
   component: any;
@@ -16,13 +23,13 @@ const RestrictedRoute: React.FC<IProps> = ({
 
   const isloading = useSelector(selectIsLoading);
 
-  // const token = useSelector(selectAuthAccessToken);
+  const token = useSelector(selectAuthAccessToken);
 
-  // const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  // useEffect(() => {
-  //   if (!authenticated && token) dispatch(refreshUserThunk());
-  // }, [authenticated, token, dispatch]);
+  useEffect(() => {
+    if (!authenticated && token) dispatch(refreshUserThunk());
+  }, [authenticated, token, dispatch]);
 
   if (isloading) return null;
 

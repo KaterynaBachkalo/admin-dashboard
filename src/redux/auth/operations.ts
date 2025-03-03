@@ -4,8 +4,8 @@ import { RootState } from "../store";
 import { IForms } from "../../types";
 
 export const adminInstance = axios.create({
-  baseURL: "https://admin-dashboard-backend-d6oa.onrender.com/api",
-  // baseURL: "http://localhost:3000/api/",
+  // baseURL: "http://localhost:4000/api/",
+  baseURL: "https://admin-dashboard-backend-gules.vercel.app/api",
 });
 
 const setAccessToken = (accessToken: string) => {
